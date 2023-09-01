@@ -68,7 +68,7 @@ function CertificateEditForm() {
   }
 
   useEffect(()=>{
-    if (responseStatus == 'success') {
+    if (responseStatus === 'success') {
         setLoading(false)
     }
   },[certificates])

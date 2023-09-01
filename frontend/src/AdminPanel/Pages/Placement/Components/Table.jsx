@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
@@ -77,7 +78,7 @@ function PlacementList() {
     }, [placements]);
 
     useEffect(()=>{
-        if (responseStatus == 'success') {
+        if (responseStatus === 'success') {
             setLoading(false)
         }
     },[placements])

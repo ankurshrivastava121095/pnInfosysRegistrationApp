@@ -58,7 +58,7 @@ function InterviewQuestionEditForm() {
   }
 
   useEffect(()=>{
-    if (responseStatus == 'success') {
+    if (responseStatus === 'success') {
         setLoading(false)
     }
   },[questions])

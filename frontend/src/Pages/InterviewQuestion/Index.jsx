@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { useEffect } from 'react'
@@ -30,7 +31,7 @@ function InterviewQuestionIndex() {
     },[courses])
 
     useEffect(()=>{
-        if (responseStatus == 'success') {
+        if (responseStatus === 'success') {
             setLoading(false)
         }
     },[courses])

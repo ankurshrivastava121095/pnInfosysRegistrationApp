@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios'
 import React from 'react'
@@ -32,7 +33,6 @@ function RegistrationForm() {
     }
 
     const [formData, setFormData] = useState(fields)
-    const [msg, setMsg] = useState(false)
     const [banner, setBanner] = useState()
     const [courseData, setCourseData] = useState([])
     const [courseName, setCourseName] = useState()
@@ -58,13 +58,13 @@ function RegistrationForm() {
     }
 
     useEffect(()=>{
-        if (responseMessage == 'Student created successfully') {
+        if (responseMessage === 'Student created successfully') {
             setLoading(false)
             setShowResponse(true)   
             setResponseText('You have Registered Successfully We will get in touch with you soon !')
             setResponseTextColor('success')  
         } 
-        if (responseStatus == 'rejected') {
+        if (responseStatus === 'rejected') {
             setLoading(false)
             setShowResponse(true)   
             setResponseText('Something went wrong, Try again !')

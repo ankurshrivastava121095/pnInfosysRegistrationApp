@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 import { useState } from 'react';
@@ -123,7 +124,7 @@ function CourseEditForm() {
   }
 
   useEffect(()=>{
-    if (responseStatus == 'success') {
+    if (responseStatus === 'success') {
         setLoading(false)
     }
   },[courses])

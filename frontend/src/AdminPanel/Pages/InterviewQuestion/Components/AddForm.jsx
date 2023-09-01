@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -60,7 +61,7 @@ function InterviewQuestionAddForm() {
   }, [courses]);
 
   useEffect(()=>{
-    if (responseStatus == 'success') {
+    if (responseStatus === 'success') {
         setLoading(false)
     }
   },[questions])

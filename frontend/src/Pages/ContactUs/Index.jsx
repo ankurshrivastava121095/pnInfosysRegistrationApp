@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createContact } from "../../Features/Contacts/ContactSlice";
@@ -41,13 +42,13 @@ const ContactUsIndex = () =>{
     }
 
     useEffect(()=>{
-        if (responseMessage == 'Contact created successfully') {
+        if (responseMessage === 'Contact created successfully') {
             setLoading(false)
             setShowResponse(true)   
             setResponseText('We have received your message and will reach you soon !')
             setResponseTextColor('success')  
         } 
-        if (responseStatus == 'rejected') {
+        if (responseStatus === 'rejected') {
             setLoading(false)
             setShowResponse(true)   
             setResponseText('Something went wrong, Try again !')

@@ -44,7 +44,7 @@ function CertificateAddForm({setAddDrawer, setRefreshTable, setHandleMsg, setMsg
   }
 
   useEffect(()=>{
-    if (responseStatus == 'success') {
+    if (responseStatus === 'success') {
         setLoading(false)
     }
   },[certificates])

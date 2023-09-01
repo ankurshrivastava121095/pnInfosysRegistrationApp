@@ -42,7 +42,7 @@ function PlacementAddForm() {
   }
 
   useEffect(()=>{
-    if (responseStatus == 'success') {
+    if (responseStatus === 'success') {
         setLoading(false)
     }
   },[placements])

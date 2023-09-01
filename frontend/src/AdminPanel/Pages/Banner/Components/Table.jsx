@@ -78,7 +78,7 @@ function BannerList() {
     }, [banners]);
 
     useEffect(()=>{
-        if (responseStatus == 'success') {
+        if (responseStatus === 'success') {
             setLoading(false)
         }
     },[banners])

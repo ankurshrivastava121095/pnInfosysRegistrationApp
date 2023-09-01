@@ -1,12 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import '../../Assets/Style.css'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useState } from 'react'
 
 const Navbar = () =>{
 
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const params = useParams()
@@ -63,7 +64,7 @@ const Navbar = () =>{
     },[])
 
     useEffect(()=>{
-        if (success == true && message == 'Logged In') {
+        if (success === true && message === 'Logged In') {
             navigate('/admin/dashboard');
         }
     },[success, message])
