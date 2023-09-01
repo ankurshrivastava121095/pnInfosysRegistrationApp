@@ -1,0 +1,138 @@
+*{
+    /* font-family: cursive; */
+    /* font-family: monospace; */
+    font-family: roboto;
+}
+
+/* ::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: darkgrey
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: darkgrey;
+} */
+
+.logoBlueColor{
+    color: #009df2;
+}
+
+.bg-nav{
+    /* background-color: #00000038; */
+    /* background-color: #22ffb5; */
+    /* background-color: darkblue; */
+    background-color: #088cfb;
+}
+
+.sliderHeight{
+    height: 500px;
+}
+
+.text-lightBlue{
+    color: lightskyblue;
+}
+
+.text-darkBlue{
+    color: darkblue;
+}
+
+.fs-48px{
+    font-size: 48px;
+}
+
+.nav-item a:hover{
+    color: lightskyblue!important;
+}
+.nav-item .text-decoration-underline:hover{
+    color: #fff!important;
+}
+
+.cardImageHeight{
+    height: 250px;
+}
+
+.text-justify{
+    text-align: justify;
+}
+
+.bg-custom-info{
+    background-color: #38b5cc17;
+}
+
+.btn-primary:hover{
+    border: 1px solid #0d6efd!important;
+    background-color: #fff!important;
+    color: #0d6efd!important;
+    font-weight: bold!important;
+}
+
+.bg-theme-secondary{
+    background-color: #1b4f3e1a;
+}
+
+.homeLanguages{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.fs-100px{
+    font-size: 100px;
+}
+
+.reactColor{
+    color:  #61dbfb;
+}
+
+.angularColor{
+    color: #dd1b16;
+}
+
+.nodeColor{
+    color: #026e00;
+}
+
+.expressColor{
+    color: #555;
+}
+
+.mongoColor{
+    color: #00ed64;
+}
+
+.htmlColor{
+    color: #e44d26;
+}
+
+.cssColor{
+    color: #0071bb;
+}
+
+.bootstrapColor{
+    color: #62468b;
+}
+
+.jsColor{
+    color: #f7e018;
+}
+
+.mysqlColor{
+    color: #f29221;
+}
+
+.phpColor{
+    color:  #6182b7;
+}
+
+.laravelColor{
+    color: #f72c1e;
+}
