@@ -1,4 +1,4 @@
-import axios from 'axios';
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';

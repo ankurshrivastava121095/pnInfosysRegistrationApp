@@ -36,6 +36,12 @@ const Navbar = () =>{
         if(location.pathname  === '/certificate'){
             document.title = 'PNINFOSYS | Certificate'
         }
+        if(location.pathname  === '/interviewQuestion'){
+            document.title = 'PNINFOSYS | Interview Question'
+        }
+        if(location.pathname  === `/interviewQuestion/${ID}`){
+            document.title = 'PNINFOSYS | Interview Question'
+        }
         if(location.pathname  === `/register/${ID}`){
             document.title = 'PNINFOSYS | Registration'
         }
@@ -100,6 +106,9 @@ const Navbar = () =>{
                         </li>
                         <li className="nav-item">
                             <Link className={`nav-link ${location.pathname  === '/certificate' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/certificate">CERTIFICATE</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className={`nav-link ${location.pathname  === '/interviewQuestion' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/interviewQuestion">INTERVIEW QUESTION</Link>
                         </li>
                         <li className="nav-item">
                             <Link className={`nav-link ${location.pathname  === '/contact-us' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/contact-us">CONTACT US</Link>

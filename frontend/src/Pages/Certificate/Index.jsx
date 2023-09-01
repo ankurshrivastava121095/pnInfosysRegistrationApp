@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
@@ -18,12 +17,14 @@ function CertificateIndex() {
         (state) => state.certificates
     );
 
-    const getAllCourses = () => {
+    const getAllCertificates = () => {
         dispatch(getCertificates());
     }
 
     useEffect(()=>{
-        setAllCertificate(certificates?.data)
+        if (certificates?.data && certificates.data.length > 0) {
+            setAllCertificate(certificates?.data)
+        }
     },[certificates])
 
     useEffect(()=>{
@@ -33,7 +34,7 @@ function CertificateIndex() {
     },[allCertificate])
     
     useEffect(() => {
-        getAllCourses();
+        getAllCertificates();
     }, []);
 
     const indexOfLastItem = currentPage * itemsPerPage;

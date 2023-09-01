@@ -9,6 +9,7 @@ const StudentController = require('../controllers/StudentController')
 const UserController = require('../controllers/UserController')
 const DashboardController = require('../controllers/DashboardController')
 const CertificateController = require('../controllers/CertificateController')
+const InterviewQuestionController = require('../controllers/InterviewQuestionController')
 const router = express.Router()
 
 
@@ -75,6 +76,15 @@ router.get('/getActiveBanner',BannerController.getActiveBanner)
 router.get('/bannerDetail/:id',BannerController.bannerDetail)
 router.put('/updateBanner/:id',BannerController.updateBanner)
 router.delete('/bannerDelete/:id',BannerController.bannerDelete)
+
+
+//InterviewQuestionController
+router.post('/addQuestion',InterviewQuestionController.addQuestion)
+router.get('/getAllQuestions',InterviewQuestionController.getAllQuestions)
+router.get('/getQuestions/:id',InterviewQuestionController.getQuestions)
+router.get('/getQuestion/:id',InterviewQuestionController.getQuestion)
+router.put('/updateQuestion/:id',InterviewQuestionController.updateQuestion)
+router.delete('/questionDelete/:id',InterviewQuestionController.questionDelete)
 
 
 // DashboardController

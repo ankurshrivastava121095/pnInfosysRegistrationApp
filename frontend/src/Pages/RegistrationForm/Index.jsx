@@ -54,7 +54,7 @@ function RegistrationForm() {
 
         setLoading(true)
         
-        // dispatch(createStudent(formData));
+        dispatch(createStudent(formData));
     }
 
     useEffect(()=>{
@@ -75,13 +75,13 @@ function RegistrationForm() {
     // 
 
     const getCourseDetail = async() => {
-        const {data} = await axios.get(`http://localhost:5000/api/pn/courseDetail/${courseID}`);
+        const {data} = await axios.get(`${process.env.REACT_APP_URL_ENDPOINT}/courseDetail/${courseID}`);
         // console.log(data.data)
         setCourseData(data.data)
     }
 
     const getActiveBanner = async() => {
-        const {data} = await axios.get(`http://localhost:5000/api/pn/getActiveBanner`);
+        const {data} = await axios.get(`${process.env.REACT_APP_URL_ENDPOINT}/getActiveBanner`);
         console.log(data.data.bannerImage.url)
         setBanner(data.data.bannerImage.url)
     }
@@ -102,7 +102,6 @@ function RegistrationForm() {
                 <div className='row'>
                     <h1 className='text-center mt-5 fst-italic'>Register Now</h1>
                     <div className='col-md-6 mt-4 mb-5'>
-                        {/* <img src={banner} className='w-100' alt="" /> */}
                         <img src={courseData?.courseImage?.url} className='w-100' alt="" />
                     </div>
                     <div className='col-md-6 mt-4 mb-5'>
@@ -292,7 +291,7 @@ function RegistrationForm() {
                                 <br />
                                 {
                                     showResponse ?
-                                    <><div className={`text-${responseTextColor} border border-${responseTextColor} rounded fw-bold rounded p-2 mt-3`}>{responseText}</div></>
+                                    <><div className={`text-${responseTextColor} text-center border border-${responseTextColor} rounded fw-bold rounded p-2 mt-3`}>{responseText}</div><br /></>
                                     :
                                     ''
                                 }

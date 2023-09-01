@@ -10,8 +10,7 @@ function ContactUsMessageView({messageID, setViewDrawer}) {
     const [messageData, setMessageData] = useState([])
 
     const getMessageDetail = async() => {
-        const {data} = await axios.get(`http://localhost:3001/api/messageDetail/${message_id}`);
-        // console.log(data.data)
+        const {data} = await axios.get(`${process.env.REACT_APP_URL_ENDPOINT}/messageDetail/${message_id}`);
         setMessageData(data.data)
     }
         

@@ -156,6 +156,25 @@ function Main() {
             document.title = 'PNINFOSYS | Banner Edit'
         }
         // banner module ends
+
+        // interview question module starts
+        if(location.pathname === '/admin/interviewQuestion/interviewQuestionList'){
+            setPageName('Interview Question List')
+            document.title = 'PNINFOSYS | Interview Question List'
+        }
+        if(location.pathname === '/admin/interviewQuestion/addInterviewQuestion'){
+            setPageName('Add Interview Question')
+            document.title = 'PNINFOSYS | Add Interview Question'
+        }
+        if(location.pathname === `/admin/interviewQuestion/interviewQuestionView/${urlParam}`){
+            setPageName('Interview Question View')
+            document.title = 'PNINFOSYS | Interview Question View'
+        }
+        if(location.pathname === `/admin/interviewQuestion/interviewQuestionEdit/${urlParam}`){
+            setPageName('Interview Question Edit')
+            document.title = 'PNINFOSYS | Interview Question Edit'
+        }
+        // interview question module ends
     },[location])
 
     const handleLogout = () => {
@@ -202,6 +221,8 @@ function Main() {
                 <Link to="/admin/slider/sliderList" className={`${location.pathname === '/admin/slider/sliderList' ? 'fw-bold text-white' : ''} text-lightblue`}><i className="fa-solid fa-images"></i> Slider <i className={`fa-solid fa-chevron-right ${location.pathname === '/admin/slider/sliderList' ? 'd-block' : 'd-none'}`} style={{float: "right", marginRight: "10px", marginTop: "5px"}}></i></Link>
                 <hr className='text-lightblue m-2' />
                 <Link to="/admin/banner/bannerList" className={`${location.pathname === '/admin/banner/bannerList' ? 'fw-bold text-white' : ''} text-lightblue`}><i className="fa-regular fa-file-lines"></i> Banner <i className={`fa-solid fa-chevron-right ${location.pathname === '/admin/banner/bannerList' ? 'd-block' : 'd-none'}`} style={{float: "right", marginRight: "10px", marginTop: "5px"}}></i></Link>
+                <hr className='text-lightblue m-2' />
+                <Link to="/admin/interviewQuestion/interviewQuestionList" className={`${location.pathname === '/admin/interviewQuestion/interviewQuestionList' ? 'fw-bold text-white' : ''} text-lightblue`}><i className="fa-solid fa-question"></i> Interview Question <i className={`fa-solid fa-chevron-right ${location.pathname === '/admin/interviewQuestion/interviewQuestionList' ? 'd-block' : 'd-none'}`} style={{float: "right", marginRight: "10px", marginTop: "5px"}}></i></Link>
                 <hr className='text-lightblue m-2' />
 
 

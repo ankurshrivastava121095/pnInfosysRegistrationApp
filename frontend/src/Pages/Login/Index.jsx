@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
-import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../Features/Auth/AuthSlice";
 
 const LoginIndex = () =>{

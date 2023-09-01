@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
@@ -23,7 +22,9 @@ function PlacementIndex() {
     }
 
     useEffect(()=>{
-        setAllPlacement(placements?.data)
+        if (placements?.data && placements.data.length > 0) {
+            setAllPlacement(placements?.data)
+        }
     },[placements])
 
     useEffect(()=>{

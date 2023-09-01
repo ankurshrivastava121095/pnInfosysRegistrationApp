@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { SketchPicker } from "react-color";
@@ -69,12 +70,9 @@ function CourseAddForm() {
       courseData.append("languageFourIconColor", languageFourIconColor);
       courseData.append("courseImage", courseImage);
 
-      // console.log(courseData.courseName);
-
       dispatch(createCourse(courseData));
 
     } catch (err) {
-      // console.log(err)
       if (err.res.data.status === "404") {
       }
     }
@@ -132,7 +130,6 @@ function CourseAddForm() {
                         name="courseName"
                         className="form-control"
                         placeholder="Course Name"
-                        // onChange={onHandleChange}
                         onChange={(e) => setCourseName(e.target.value)}
                         required="required"
                       />
@@ -151,7 +148,6 @@ function CourseAddForm() {
                         name="databaseName"
                         className="form-control"
                         placeholder="Database Name"
-                        // onChange={onHandleChange}
                         onChange={(e) => setDatabaseName(e.target.value)}
                       />
                       <label htmlFor="databaseName" className="inputLabel">
@@ -167,7 +163,6 @@ function CourseAddForm() {
                         name="databaseIcon"
                         className="form-control"
                         placeholder="Database Icon"
-                        // onChange={onHandleChange}
                         onChange={(e) => setDatabaseIcon(e.target.value)}
                       />
                       <label htmlFor="databaseIcon" className="inputLabel">
@@ -183,7 +178,6 @@ function CourseAddForm() {
                         name="databaseIconColor"
                         className="form-control"
                         placeholder="Database Icon Color"
-                        // onChange={onHandleChange}
                         onChange={(e) => setDatabaseIconColor(e.target.value)}
                       />
                       <label htmlFor="databaseIconColor" className="inputLabel">
@@ -248,7 +242,6 @@ function CourseAddForm() {
                         name="languageTwo"
                         className="form-control"
                         placeholder="Language Two"
-                        // onChange={onHandleChange}
                         onChange={(e) => setLanguageTwo(e.target.value)}
                       />
                       <label htmlFor="languageTwo" className="inputLabel">
@@ -298,7 +291,6 @@ function CourseAddForm() {
                         name="languageThree"
                         className="form-control"
                         placeholder="Language Three"
-                        // onChange={onHandleChange}
                         onChange={(e) => setLanguageThree(e.target.value)}
                       />
                       <label htmlFor="languageThree" className="inputLabel">
@@ -344,7 +336,6 @@ function CourseAddForm() {
                         name="languageFour"
                         className="form-control"
                         placeholder="Language Four"
-                        // onChange={onHandleChange}
                         onChange={(e) => setLanguageFour(e.target.value)}
                       />
                       <label htmlFor="languageFour" className="inputLabel">
@@ -421,7 +412,6 @@ function CourseAddForm() {
                   name="description"
                   className="form-control h-100px"
                   placeholder="Description"
-                  // onChange={onHandleChange}
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
                 <label htmlFor="description" className="inputLabel">
@@ -436,7 +426,6 @@ function CourseAddForm() {
                     id="courseImage" 
                     name='courseImage'
                     className='mt-4' 
-                    // onChange={onHandleImageChange}
                     onChange={(e)=>setCourseImage(e.target.files[0])}
                     required
                   />

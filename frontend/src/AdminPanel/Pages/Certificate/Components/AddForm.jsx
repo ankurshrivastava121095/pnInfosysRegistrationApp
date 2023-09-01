@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import axios from 'axios';
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -77,8 +76,7 @@ function CertificateAddForm({setAddDrawer, setRefreshTable, setHandleMsg, setMsg
                             id="studentName" 
                             name='studentName' 
                             className="form-control" 
-                            placeholder="Student Name" 
-                            // onChange={onHandleChange} 
+                            placeholder="Student Name"  
                             onChange={(e)=>setStudentName(e.target.value)}
                             required='required' 
                         />
@@ -94,8 +92,7 @@ function CertificateAddForm({setAddDrawer, setRefreshTable, setHandleMsg, setMsg
                             id="courseName" 
                             name='courseName' 
                             className="form-control" 
-                            placeholder="Course Name" 
-                            // onChange={onHandleChange} 
+                            placeholder="Course Name"  
                             onChange={(e)=>setCourseName(e.target.value)}
                             required='required' 
                         />
@@ -112,7 +109,6 @@ function CertificateAddForm({setAddDrawer, setRefreshTable, setHandleMsg, setMsg
                             name='courseDuration' 
                             className="form-control" 
                             placeholder="Course Duration" 
-                            // onChange={onHandleChange} 
                             onChange={(e)=>setCourseDuration(e.target.value)}
                             required='required' 
                         />
@@ -129,7 +125,6 @@ function CertificateAddForm({setAddDrawer, setRefreshTable, setHandleMsg, setMsg
                             name='certificateLink' 
                             className="form-control" 
                             placeholder="Course Link" 
-                            // onChange={onHandleChange} 
                             onChange={(e)=>setCertificateLink(e.target.value)}
                             required='required' 
                         />
@@ -145,7 +140,6 @@ function CertificateAddForm({setAddDrawer, setRefreshTable, setHandleMsg, setMsg
                       id="certificateImage" 
                       name='certificateImage'
                       className='mt-4' 
-                      // onChange={onHandleImageChange}
                       onChange={(e)=>setCertificateImage(e.target.files[0])}
                       required
                     />

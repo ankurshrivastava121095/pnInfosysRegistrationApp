@@ -1,37 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Drawer } from '@mui/material'
-import axios from 'axios';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
-import { Link, useNavigate } from 'react-router-dom'
-import CourseEditForm from './EditForm';
-import CourseView from './View';
+import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import { useMemo } from 'react';
-import BannerAddForm from './AddForm';
-import BannerEditForm from './EditForm';
-import BannerView from './View';
 import { deleteBanner, getBanners } from '../../../../Features/Banners/BannerSlice';
 import { useDispatch, useSelector } from 'react-redux';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
 
 function BannerList() {
 

@@ -1,7 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createContact } from "../../Features/Contacts/ContactSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../Features/Auth/AuthSlice";

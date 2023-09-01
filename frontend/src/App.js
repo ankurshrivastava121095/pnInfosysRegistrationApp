@@ -43,6 +43,12 @@ import SliderEditForm from "./AdminPanel/Pages/Slider/Components/EditForm";
 import BannerAddForm from "./AdminPanel/Pages/Banner/Components/AddForm";
 import BannerView from "./AdminPanel/Pages/Banner/Components/View";
 import BannerEditForm from "./AdminPanel/Pages/Banner/Components/EditForm";
+import InterviewQuestionList from "./AdminPanel/Pages/InterviewQuestion/Components/Table";
+import InterviewQuestionAddForm from "./AdminPanel/Pages/InterviewQuestion/Components/AddForm";
+import InterviewQuestionView from "./AdminPanel/Pages/InterviewQuestion/Components/View";
+import InterviewQuestionEditForm from "./AdminPanel/Pages/InterviewQuestion/Components/EditForm";
+import InterviewQuestionIndex from "./Pages/InterviewQuestion/Index";
+import InterviewQuestionsIndex from "./Pages/InterviewQuestion/Questions";
 
 function App() {
 
@@ -56,6 +62,8 @@ function App() {
           <Route path="/courses" element={<CoursesIndex />} />
           <Route path="/placement" element={<PlacementIndex />} />
           <Route path="/certificate" element={<CertificateIndex />} />
+          <Route path="/interviewQuestion" element={<InterviewQuestionIndex />} />
+          <Route path="/interviewQuestion/:id" element={<InterviewQuestionsIndex />} />
           <Route path="/gallery" element={<GalleryIndex />} />
           <Route path="/contact-us" element={<ContactUsIndex />} />
           <Route path="/login" element={<LoginIndex />} />
@@ -63,61 +71,61 @@ function App() {
           <Route path="/register/:id" element={<RegistrationForm />} />
         </Route>
 
-        {
-          // isAuthenticated ?
-          <>
-            {/* Backend */}
-            <Route path="/admin" element={<Main />} >
-              <Route path="/admin/dashboard" element={<Dashboard />} />
+      
+        {/* Backend */}
+        <Route path="/admin" element={<Main />} >
+          <Route path="/admin/dashboard" element={<Dashboard />} />
 
-              <Route path="/admin/student" element={<StudentIndex />}>
-                <Route path="/admin/student/studentList" element={<StudentList />} />
-                <Route path="/admin/student/studentView/:id" element={<StudentView />} />
-                <Route path="/admin/student/studentEdit/:id" element={<StudentEditForm />} />
-              </Route>
+          <Route path="/admin/student" element={<StudentIndex />}>
+            <Route path="/admin/student/studentList" element={<StudentList />} />
+            <Route path="/admin/student/studentView/:id" element={<StudentView />} />
+            <Route path="/admin/student/studentEdit/:id" element={<StudentEditForm />} />
+          </Route>
 
-              <Route path="/admin/courses" element={<CourseIndexPage />}>
-                <Route path="/admin/courses/addCourse" element={<CourseAddForm />} />
-                <Route path="/admin/courses/coursesList" element={<CourseList />} />
-                <Route path="/admin/courses/courseView/:id" element={<CourseView />} />
-                <Route path="/admin/courses/courseEdit/:id" element={<CourseEditForm />} />
-              </Route>
+          <Route path="/admin/courses" element={<CourseIndexPage />}>
+            <Route path="/admin/courses/addCourse" element={<CourseAddForm />} />
+            <Route path="/admin/courses/coursesList" element={<CourseList />} />
+            <Route path="/admin/courses/courseView/:id" element={<CourseView />} />
+            <Route path="/admin/courses/courseEdit/:id" element={<CourseEditForm />} />
+          </Route>
 
-              <Route path="/admin/placement" element={<PlacementIndexPage />}>
-                <Route path="/admin/placement/addPlacedStudent" element={<PlacementAddForm />} />
-                <Route path="/admin/placement/placementList" element={<PlacementList />} />
-                <Route path="/admin/placement/placementView/:id" element={<PlacementView />} />
-                <Route path="/admin/placement/placementEdit/:id" element={<PlacementEditForm />} />
-              </Route>
+          <Route path="/admin/placement" element={<PlacementIndexPage />}>
+            <Route path="/admin/placement/addPlacedStudent" element={<PlacementAddForm />} />
+            <Route path="/admin/placement/placementList" element={<PlacementList />} />
+            <Route path="/admin/placement/placementView/:id" element={<PlacementView />} />
+            <Route path="/admin/placement/placementEdit/:id" element={<PlacementEditForm />} />
+          </Route>
 
-              <Route path="/admin/certificate" element={<CertificateIndexPage />}>
-                <Route path="/admin/certificate/certificateList" element={<CertificateList />} />
-                <Route path="/admin/certificate/addCertificate" element={<CertificateAddForm />} />
-                <Route path="/admin/certificate/certificateView/:id" element={<CertificateView />} />
-                <Route path="/admin/certificate/certificateEdit/:id" element={<CertificateEditForm />} />
-              </Route>
+          <Route path="/admin/certificate" element={<CertificateIndexPage />}>
+            <Route path="/admin/certificate/certificateList" element={<CertificateList />} />
+            <Route path="/admin/certificate/addCertificate" element={<CertificateAddForm />} />
+            <Route path="/admin/certificate/certificateView/:id" element={<CertificateView />} />
+            <Route path="/admin/certificate/certificateEdit/:id" element={<CertificateEditForm />} />
+          </Route>
 
-              <Route path="/admin/slider" element={<SliderIndexPage />}>
-                <Route path="/admin/slider/sliderList" element={<SliderList />} />
-                <Route path="/admin/slider/addSlider" element={<SliderAddForm />} />
-                <Route path="/admin/slider/sliderView/:id" element={<SliderView />} />
-                <Route path="/admin/slider/sliderEdit/:id" element={<SliderEditForm />} />
-              </Route>
+          <Route path="/admin/slider" element={<SliderIndexPage />}>
+            <Route path="/admin/slider/sliderList" element={<SliderList />} />
+            <Route path="/admin/slider/addSlider" element={<SliderAddForm />} />
+            <Route path="/admin/slider/sliderView/:id" element={<SliderView />} />
+            <Route path="/admin/slider/sliderEdit/:id" element={<SliderEditForm />} />
+          </Route>
 
-              <Route path="/admin/banner" element={<BannerIndexPage />}>
-                <Route path="/admin/banner/bannerList" element={<BannerList />} />
-                <Route path="/admin/banner/addBanner" element={<BannerAddForm />} />
-                <Route path="/admin/banner/bannerView/:id" element={<BannerView />} />
-                <Route path="/admin/banner/bannerEdit/:id" element={<BannerEditForm />} />
-              </Route>
+          <Route path="/admin/banner" element={<BannerIndexPage />}>
+            <Route path="/admin/banner/bannerList" element={<BannerList />} />
+            <Route path="/admin/banner/addBanner" element={<BannerAddForm />} />
+            <Route path="/admin/banner/bannerView/:id" element={<BannerView />} />
+            <Route path="/admin/banner/bannerEdit/:id" element={<BannerEditForm />} />
+          </Route>
 
-              <Route path="/admin/messages" element={<ContactIsMessagesIndex />} />
+          <Route path="/admin/interviewQuestion" element={<BannerIndexPage />}>
+            <Route path="/admin/interviewQuestion/interviewQuestionList" element={<InterviewQuestionList />} />
+            <Route path="/admin/interviewQuestion/addInterviewQuestion" element={<InterviewQuestionAddForm />} />
+            <Route path="/admin/interviewQuestion/interviewQuestionView/:id" element={<InterviewQuestionView />} />
+            <Route path="/admin/interviewQuestion/interviewQuestionEdit/:id" element={<InterviewQuestionEditForm />} />
+          </Route>
 
-            </Route>
-          </>
-          // :
-          // <Route path="/login" element={<LoginIndex />} />
-        }
+          <Route path="/admin/messages" element={<ContactIsMessagesIndex />} />
+        </Route>
       </Routes>
     </div>
   );

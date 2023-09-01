@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
@@ -6,22 +7,22 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePlacement, getPlacements } from '../../../../Features/Placements/PlacementSlice';
+import { deleteQuestion, getAllQuestions } from '../../../../Features/InterviewQuestions/InterviewQuestionSlice';
 
-function PlacementList() {
+function InterviewQuestionList() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { placements, responseStatus, responseMessage } = useSelector(
-        (state) => state.placements
+    const { questions, responseStatus, responseMessage } = useSelector(
+        (state) => state.questions
     );
 
-    const [allPlacedStudents, setAllPlacedStudents] = useState([]);
+    const [allQuestions, setAllQuestions] = useState([]);
     const [loading, setLoading] = useState(true)
 
     const handleDelete = (id) => {
-        dispatch(deletePlacement(id))
+        dispatch(deleteQuestion(id))
     }
 
     const showSuccessToast = (succMessage) => {
@@ -43,50 +44,50 @@ function PlacementList() {
             accessorFn: (val) => {
                 return (
                     <div className='d-flex gap-10'>
-                        <button type="button" className='btn btn-sm btn-theme' onClick={() => navigate(`/admin/placement/placementView/${val?._id}`)}><i className="fa-solid fa-eye"></i></button>
-                        <button type="button" className='btn btn-sm btn-theme' onClick={() => navigate(`/admin/placement/placementEdit/${val?._id}`)}><i className="fa-solid fa-pen-to-square"></i></button>
+                        <button type="button" className='btn btn-sm btn-theme' onClick={() => navigate(`/admin/interviewQuestion/interviewQuestionView/${val?._id}`)}><i className="fa-solid fa-eye"></i></button>
+                        <button type="button" className='btn btn-sm btn-theme' onClick={() => navigate(`/admin/interviewQuestion/interviewQuestionEdit/${val?._id}`)}><i className="fa-solid fa-pen-to-square"></i></button>
                         <button type="button" className='btn btn-sm btn-theme' onClick={() => handleDelete(val._id)}><i className="fa-solid fa-trash-can"></i></button>    
                     </div>
                 )
             }
         },
         {
-            header: "Name",
-            accessorKey: "name",
+            header: "Question",
+            accessorKey: "question",
             enableGlobalFilter: true,
         },
         {
-            header: "Company",
-            accessorKey: "company",
+            header: "Course Name",
+            accessorKey: "courseName",
             enableGlobalFilter: true,
         },
     ]);
 
-    const fetchPlacedStudents = () => {
-        dispatch(getPlacements());
+    const fetchQuestions = () => {
+        dispatch(getAllQuestions());
     }
 
     useEffect(()=>{
-        fetchPlacedStudents()
+        fetchQuestions()
     },[])
 
     useEffect(() => {
-        if (placements?.data && placements.data.length > 0) {
-            setAllPlacedStudents(placements.data);
+        if (questions?.data && questions.data.length > 0) {
+            setAllQuestions(questions.data);
         }
-    }, [placements]);
+    }, [questions]);
 
     useEffect(()=>{
         if (responseStatus == 'success') {
             setLoading(false)
         }
-    },[placements])
+    },[questions])
 
     useEffect(()=>{
-        if (responseStatus === 'success' && responseMessage === 'Placed Student deleted successfully') {
+        if (responseStatus === 'success' && responseMessage === 'Question deleted successfully') {
             setLoading(false)
             showSuccessToast(responseMessage)
-            fetchPlacedStudents()
+            fetchQuestions()
         }
         if (responseStatus === 'rejected') {
             setLoading(false)
@@ -96,18 +97,17 @@ function PlacementList() {
 
     return (
         <>
-            <ToastContainer />
             <div className='bg-GrayDiv'>
+                <ToastContainer />
                 <div className='d-flex flex-wrap justify-content-between'>
                     <div>&nbsp;</div>
-                    <button type="button" className='btn btn-darkBlue mb-3' onClick={() => navigate('/admin/placement/addPlacedStudent')}><i className="fa-solid fa-plus"></i> Add New</button>
+                    <button type="button" className='btn btn-darkBlue mb-3' onClick={() => navigate('/admin/interviewQuestion/addInterviewQuestion')}><i className="fa-solid fa-plus"></i> Add New</button>
                 </div>
-                <ToastContainer />
                 {
                     !loading ?
                         <div style={{ overflow:'auto',maxWidth:'100%',borderWidth:'2px',borderColor:'#eee',borderStyle:'solid'}}>
                             <MaterialReactTable
-                                data={allPlacedStudents}
+                                data={allQuestions}
                                 enableTopToolbar
                                 columns={columns}
                                 enableSorting={true}
@@ -133,4 +133,4 @@ function PlacementList() {
     )
 }
 
-export default PlacementList
+export default InterviewQuestionList

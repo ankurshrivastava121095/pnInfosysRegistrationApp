@@ -336,6 +336,10 @@ thead, tfoot{
   margin-top: 70px;
 }
 
+.accordion-item {
+  border-bottom: 2px solid darkblue !important;
+}
+
 .form-control{
   display: block;
   width: 100%;
