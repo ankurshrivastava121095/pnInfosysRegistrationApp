@@ -86,7 +86,7 @@ const Navbar = () =>{
                 <div className="container-fluid">
                     {/* <Link className="navbar-brand fs-3 fw-bold" to="#"><span className="logoBlueColor">PN</span>INFO<span className="logoBlueColor">SYS</span></Link> */}
                     <Link className="navbar-brand fs-3 fw-bold" to="#">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/pn-images.appspot.com/o/logo%2Fcolorlogo.png?alt=media&token=0386f0aa-e1e1-4950-924f-3eedaa82d967" className='w-50 bg-white rounded' alt="" />
+                        <img src="https://firebasestorage.googleapis.com/v0/b/pn-images.appspot.com/o/logo%2Fcolorlogo.png?alt=media&token=0386f0aa-e1e1-4950-924f-3eedaa82d967" className='bg-white rounded' alt="" style={{width:"171px"}}/>
                     </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -118,14 +118,14 @@ const Navbar = () =>{
                             <Link className={`nav-link ${location.pathname  === '/login' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/login">LOGIN</Link>
                         </li>
                         <li className="nav-item">
-                            <a href="/" className="text-white fs-4 me-2"><i className="fa-brands fa-facebook"></i></a>
+                            <a href="https://www.facebook.com/pninfosys" className="text-white fs-4 me-2"><i className="fa-brands fa-facebook"></i></a>
                         </li>
                         <li className="nav-item">
-                            <a href="/" className="text-white fs-4 me-2"><i className="fa-brands fa-instagram"></i></a>
+                            <a href="https://www.youtube.com/@pninfosys" className="text-white fs-4 me-2"><i className="fa-brands fa-youtube"></i><i class="fa-brands fa-youtube"></i></a>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <a href="/" className="text-white fs-4 me-2"><i className="fa-brands fa-twitter"></i></a>
-                        </li>
+                        </li> */}
                     </ul>
                     </div>
                 </div>
@@ -136,7 +136,7 @@ const Navbar = () =>{
                     <div className='col-md-12'>
                         <center>
                             {/* <img src="img/favIcon.png" className='' alt="" /> */}
-                            <img src="https://firebasestorage.googleapis.com/v0/b/pn-images.appspot.com/o/logo%2Fcolorlogo.png?alt=media&token=0386f0aa-e1e1-4950-924f-3eedaa82d967" className='bg-white mt-3 rounded' alt="" />
+                            <img src="https://firebasestorage.googleapis.com/v0/b/pn-images.appspot.com/o/logo%2Fcolorlogo.png?alt=media&token=0386f0aa-e1e1-4950-924f-3eedaa82d967" className='bg-white mt-3 rounded' alt="" style={{width:"171px"}}/>
                             <hr className='text-white' />
                             <div className="row">
                                 <div className="col-md-4">

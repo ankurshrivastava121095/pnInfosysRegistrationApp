@@ -56,8 +56,8 @@ function CertificateIndex() {
                             {
                                 !loading ?
                                 currentItems?.map((val,key)=>(
-                                    <div className="col-md-3" key={key}>
-                                        <div className="card shadow-lg" style={{width: "18rem"}}>
+                                    <div className="col-md-4 mb-3" key={key}>
+                                        <div className="card shadow-lg">
                                             <img src={val?.certificateImage?.url} style={{height:"300px"}} className="card-img-top w-100" alt="..." />
                                             <div className="card-body">
                                                 <p className="card-text">
@@ -77,7 +77,7 @@ function CertificateIndex() {
                                 </>
                             }
                         </div>
-                        <div className="pagination" style={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
+                        <div className="pagination" style={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'center', gap: '1px' }}>
                             {Array(Math?.ceil(allCertificate?.length / itemsPerPage))?.fill()?.map((_, i) => (
                                 <center>
                                     <button 
