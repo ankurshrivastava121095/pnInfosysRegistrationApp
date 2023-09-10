@@ -9,6 +9,7 @@ import slidersReducer from "./Features/Sliders/SliderSlice.js";
 import studentsReducer from "./Features/Students/StudentSlice.js";
 import countsReducer from "./Features/Dashboard/DashboardSlice";
 import questionsReducer from "./Features/InterviewQuestions/InterviewQuestionSlice";
+import interviewQuestionCoursesReducer from "./Features/InterviewQuestionCourse/InterviewQuestionCourseSlice";
 
 
 export const store = configureStore({
@@ -23,5 +24,6 @@ export const store = configureStore({
         students: studentsReducer,
         counts: countsReducer,
         questions: questionsReducer,
+        interviewQuestionCourses: interviewQuestionCoursesReducer,
     },
 });

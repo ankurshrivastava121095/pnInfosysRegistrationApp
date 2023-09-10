@@ -18,6 +18,7 @@ const Navbar = () =>{
 
     const [responseMsg,setResponseMsg] = useState()
     const [isLoading, setIsLoading] = useState(false)
+    const [isNavbarOpen, setNavbarOpen] = useState(false);
 
     const { loading, success, message, error } = useSelector((state) => state.auth)
 
@@ -84,49 +85,48 @@ const Navbar = () =>{
         <>
             <nav className="navbar navbar-expand-lg bg-nav">
                 <div className="container-fluid">
-                    {/* <Link className="navbar-brand fs-3 fw-bold" to="#"><span className="logoBlueColor">PN</span>INFO<span className="logoBlueColor">SYS</span></Link> */}
                     <Link className="navbar-brand fs-3 fw-bold" to="#">
                         <img src="https://firebasestorage.googleapis.com/v0/b/pn-images.appspot.com/o/logo%2Fcolorlogo.png?alt=media&token=0386f0aa-e1e1-4950-924f-3eedaa82d967" className='bg-white rounded' alt="" style={{width:"171px"}}/>
                     </Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                    <button className="navbar-toggler" onClick={()=>setNavbarOpen(!isNavbarOpen)} type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul className="navbar-nav ms-auto d-flex align-items-center">
-                        <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname  === '/' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} aria-current="page" to="/">HOME</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname  === '/about' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/about">ABOUT</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname  === '/courses' || location.pathname  === `/register/${ID}` ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/courses">COURSES</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname  === '/placement' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/placement">PLACEMENT</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname  === '/certificate' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/certificate">CERTIFICATE</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname  === '/interviewQuestion' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/interviewQuestion">INTERVIEW QUESTION</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname  === '/contact-us' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/contact-us">CONTACT US</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname  === '/login' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/login">LOGIN</Link>
-                        </li>
-                        <li className="nav-item">
-                            <a href="https://www.facebook.com/pninfosys" className="text-white fs-4 me-2"><i className="fa-brands fa-facebook"></i></a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="https://www.youtube.com/@pninfosys" className="text-white fs-4 me-2"><i className="fa-brands fa-youtube"></i><i class="fa-brands fa-youtube"></i></a>
-                        </li>
-                        {/* <li className="nav-item">
-                            <a href="/" className="text-white fs-4 me-2"><i className="fa-brands fa-twitter"></i></a>
-                        </li> */}
-                    </ul>
+                    <div className={`collapse navbar-collapse ${isNavbarOpen ? 'show' : ''}`} id="navbarNavDropdown">
+                        <ul className="navbar-nav ms-auto d-flex align-items-center">
+                            <li className="nav-item">
+                                <Link onClick={()=>setNavbarOpen(!isNavbarOpen)} className={`nav-link ${location.pathname  === '/' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} aria-current="page" to="/">HOME</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link onClick={()=>setNavbarOpen(!isNavbarOpen)} className={`nav-link ${location.pathname  === '/about' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/about">ABOUT</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link onClick={()=>setNavbarOpen(!isNavbarOpen)} className={`nav-link ${location.pathname  === '/courses' || location.pathname  === `/register/${ID}` ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/courses">COURSES</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link onClick={()=>setNavbarOpen(!isNavbarOpen)} className={`nav-link ${location.pathname  === '/placement' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/placement">PLACEMENT</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link onClick={()=>setNavbarOpen(!isNavbarOpen)} className={`nav-link ${location.pathname  === '/certificate' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/certificate">CERTIFICATE</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link onClick={()=>setNavbarOpen(!isNavbarOpen)} className={`nav-link ${location.pathname  === '/interviewQuestion' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/interviewQuestion">INTERVIEW QUESTION</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link onClick={()=>setNavbarOpen(!isNavbarOpen)} className={`nav-link ${location.pathname  === '/contact-us' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/contact-us">CONTACT US</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link onClick={()=>setNavbarOpen(!isNavbarOpen)} className={`nav-link ${location.pathname  === '/login' ? 'text-white text-decoration-underline' : 'text-white'} fw-bold`} to="/login">LOGIN</Link>
+                            </li>
+                            <li className="nav-item">
+                                <a href="https://www.facebook.com/pninfosys" className="text-white fs-4 me-2"><i className="fa-brands fa-facebook"></i></a>
+                            </li>
+                            <li className="nav-item">
+                                <a href="https://www.youtube.com/@pninfosys" className="text-white fs-4 me-2"><i className="fa-brands fa-youtube"></i></a>
+                            </li>
+                            {/* <li className="nav-item">
+                                <a href="/" className="text-white fs-4 me-2"><i className="fa-brands fa-twitter"></i></a>
+                            </li> */}
+                        </ul>
                     </div>
                 </div>
             </nav>

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getQuestion } from '../../../../Features/InterviewQuestions/InterviewQuestionSlice';
 
-function InterviewQuestionView() {
+function InterviewQuestionCourseView() {
 
     const dispatch = useDispatch()
 
@@ -46,7 +46,7 @@ function InterviewQuestionView() {
                                     <p className='fw-bold'>Course - {data?.courseName}</p>
                                     <br /><br />
                                     <p className='fw-bold'>Question - {data?.question}</p>
-                                    <p><span className='fw-bold'>Answer</span> - <div dangerouslySetInnerHTML={{ __html: data?.answer }} /></p>
+                                    <p>Answer - {data?.answer}</p>
                                 </>
                                 :
                                     <center>
@@ -61,4 +61,4 @@ function InterviewQuestionView() {
     )
 }
 
-export default InterviewQuestionView
+export default InterviewQuestionCourseView

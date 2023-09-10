@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-function StudentIndex() {
+function InterviewQuestionCourseIndexPage() {
     return (
         <>
             <div className='container-fluid bg-white rounded'>
@@ -15,4 +15,4 @@ function StudentIndex() {
     )
 }
 
-export default StudentIndex
+export default InterviewQuestionCourseIndexPage

@@ -49,6 +49,12 @@ import InterviewQuestionView from "./AdminPanel/Pages/InterviewQuestion/Componen
 import InterviewQuestionEditForm from "./AdminPanel/Pages/InterviewQuestion/Components/EditForm";
 import InterviewQuestionIndex from "./Pages/InterviewQuestion/Index";
 import InterviewQuestionsIndex from "./Pages/InterviewQuestion/Questions";
+import InterviewQuestionIndexPage from "./AdminPanel/Pages/InterviewQuestion/Index";
+import InterviewQuestionCourseList from "./AdminPanel/Pages/InterviewQuestionCourse/Components/Table";
+import InterviewQuestionCourseAddForm from "./AdminPanel/Pages/InterviewQuestionCourse/Components/AddForm";
+import InterviewQuestionCourseView from "./AdminPanel/Pages/InterviewQuestionCourse/Components/View";
+import InterviewQuestionCourseEditForm from "./AdminPanel/Pages/InterviewQuestionCourse/Components/EditForm";
+import InterviewQuestionCourseIndexPage from "./AdminPanel/Pages/InterviewQuestionCourse/Index";
 
 function App() {
 
@@ -117,11 +123,18 @@ function App() {
             <Route path="/admin/banner/bannerEdit/:id" element={<BannerEditForm />} />
           </Route>
 
-          <Route path="/admin/interviewQuestion" element={<BannerIndexPage />}>
+          <Route path="/admin/interviewQuestion" element={<InterviewQuestionIndexPage />}>
             <Route path="/admin/interviewQuestion/interviewQuestionList" element={<InterviewQuestionList />} />
             <Route path="/admin/interviewQuestion/addInterviewQuestion" element={<InterviewQuestionAddForm />} />
             <Route path="/admin/interviewQuestion/interviewQuestionView/:id" element={<InterviewQuestionView />} />
             <Route path="/admin/interviewQuestion/interviewQuestionEdit/:id" element={<InterviewQuestionEditForm />} />
+          </Route>
+
+          <Route path="/admin/interviewQuestionCourse" element={<InterviewQuestionCourseIndexPage />}>
+            <Route path="/admin/interviewQuestionCourse/interviewQuestionCourseList" element={<InterviewQuestionCourseList />} />
+            <Route path="/admin/interviewQuestionCourse/addInterviewQuestionCourse" element={<InterviewQuestionCourseAddForm />} />
+            <Route path="/admin/interviewQuestionCourse/interviewQuestionCourseView/:id" element={<InterviewQuestionCourseView />} />
+            <Route path="/admin/interviewQuestionCourse/interviewQuestionCourseEdit/:id" element={<InterviewQuestionCourseEditForm />} />
           </Route>
 
           <Route path="/admin/messages" element={<ContactIsMessagesIndex />} />

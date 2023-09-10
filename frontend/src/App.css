@@ -11,6 +11,10 @@ h1,h2,h3,h4,h5,h6,p,span,a,th,td,label{
   pointer-events: none;
 }
 
+.ql-container {
+  height: 325px !important;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

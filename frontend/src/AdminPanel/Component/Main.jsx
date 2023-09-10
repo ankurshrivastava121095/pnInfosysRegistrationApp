@@ -175,6 +175,25 @@ function Main() {
             document.title = 'PNINFOSYS | Interview Question Edit'
         }
         // interview question module ends
+
+        // interview question course module starts
+        if(location.pathname === '/admin/interviewQuestionCourse/interviewQuestionCourseList'){
+            setPageName('Interview Question Course List')
+            document.title = 'PNINFOSYS | Interview Question Course List'
+        }
+        if(location.pathname === '/admin/interviewQuestionCourse/addInterviewQuestionCourse'){
+            setPageName('Add Interview Question Course')
+            document.title = 'PNINFOSYS | Add Interview Question Course'
+        }
+        if(location.pathname === `/admin/interviewQuestionCourse/interviewQuestionCourseView/${urlParam}`){
+            setPageName('Interview Question Course View')
+            document.title = 'PNINFOSYS | Interview Question Course View'
+        }
+        if(location.pathname === `/admin/interviewQuestionCourse/interviewQuestionCourseEdit/${urlParam}`){
+            setPageName('Interview Question Course Edit')
+            document.title = 'PNINFOSYS | Interview Question Course Edit'
+        }
+        // interview question course module ends
     },[location])
 
     const handleLogout = () => {
@@ -223,6 +242,8 @@ function Main() {
                 <Link to="/admin/banner/bannerList" className={`${location.pathname === '/admin/banner/bannerList' ? 'fw-bold text-white' : ''} text-lightblue`}><i className="fa-regular fa-file-lines"></i> Banner <i className={`fa-solid fa-chevron-right ${location.pathname === '/admin/banner/bannerList' ? 'd-block' : 'd-none'}`} style={{float: "right", marginRight: "10px", marginTop: "5px"}}></i></Link>
                 <hr className='text-lightblue m-2' />
                 <Link to="/admin/interviewQuestion/interviewQuestionList" className={`${location.pathname === '/admin/interviewQuestion/interviewQuestionList' ? 'fw-bold text-white' : ''} text-lightblue`}><i className="fa-solid fa-question"></i> Interview Question <i className={`fa-solid fa-chevron-right ${location.pathname === '/admin/interviewQuestion/interviewQuestionList' ? 'd-block' : 'd-none'}`} style={{float: "right", marginRight: "10px", marginTop: "5px"}}></i></Link>
+                <hr className='text-lightblue m-2' />
+                <Link to="/admin/interviewQuestionCourse/interviewQuestionCourseList" className={`${location.pathname === '/admin/interviewQuestionCourse/interviewQuestionCourseList' ? 'fw-bold text-white' : ''} text-lightblue`}><i className="fa-solid fa-laptop-code"></i> Interview Question Course <i className={`fa-solid fa-chevron-right ${location.pathname === '/admin/interviewQuestionCourse/interviewQuestionCourseList' ? 'd-block' : 'd-none'}`} style={{float: "right", marginRight: "10px", marginTop: "5px"}}></i></Link>
                 <hr className='text-lightblue m-2' />
 
 

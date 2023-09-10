@@ -10,10 +10,15 @@ function CertificateIndex() {
 
     const dispatch = useDispatch()
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(8);
+    const itemPerPage = 4
+
+    const [currentPage, setCurrentPage] = useState(1)
     const[allCertificate,setAllCertificate] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const startIndex = (currentPage - 1) * itemPerPage
+    const endIndex = startIndex + itemPerPage
+    const displayData = allCertificate?.slice(startIndex, endIndex)
 
     const { certificates, responseStatus, responseMessage } = useSelector(
         (state) => state.certificates
@@ -39,14 +44,6 @@ function CertificateIndex() {
         getAllCertificates();
     }, []);
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = allCertificate?.slice(indexOfFirstItem, indexOfLastItem);
-
-    const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    }
-
     return (
         <>
             <div className="container-fuild">
@@ -55,20 +52,36 @@ function CertificateIndex() {
                         <div className="row mt-5 m-3">
                             {
                                 !loading ?
-                                currentItems?.map((val,key)=>(
-                                    <div className="col-md-4 mb-3" key={key}>
-                                        <div className="card shadow-lg">
-                                            <img src={val?.certificateImage?.url} style={{height:"300px"}} className="card-img-top w-100" alt="..." />
-                                            <div className="card-body">
-                                                <p className="card-text">
-                                                    <span><span className='fw-bold'>Student Name: </span><span>{val?.studentName}</span></span><br />
-                                                    <span><span className='fw-bold'>Course: </span><span>{val?.courseName}</span></span><br />
-                                                    <span><span className='fw-bold'>Duration: </span><span>{val?.courseDuration}</span></span>
-                                                </p>
+                                <>
+                                    {    
+                                        Array.isArray(displayData) && displayData?.map((val,key)=>(
+                                            <div className="col-md-3 mb-3" key={key}>
+                                                <div className="card shadow-lg">
+                                                    <img src={val?.certificateImage?.url} style={{height:"300px"}} className="card-img-top w-100" alt="..." />
+                                                    <div className="card-body">
+                                                        <p className="card-text">
+                                                            <span><span className='fw-bold'>Student Name: </span><span>{val?.studentName}</span></span><br />
+                                                            <span><span className='fw-bold'>Course: </span><span>{val?.courseName}</span></span><br />
+                                                            <span><span className='fw-bold'>Duration: </span><span>{val?.courseDuration}</span></span>
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        ))
+                                    }
+                                    <div className='d-flex flex-nowrap align-items-center justify-content-center gap-3'>
+                                        <button className='btn btn-primary text-white' onClick={()=> setCurrentPage(currentPage - 1)} disabled={currentPage === 1}><i className="fa-solid fa-arrow-left"></i></button>
+                                        <button 
+                                            className='btn btn-primary text-white' 
+                                            onClick={() => {
+                                                if(endIndex < allCertificate?.length){
+                                                    setCurrentPage(currentPage + 1)
+                                                }
+                                            }} 
+                                        disabled={endIndex >= allCertificate?.length}><i className="fa-solid fa-arrow-right"></i></button>
                                     </div>
-                                ))
+                                </>
+                                
                                 :
                                 <>
                                     <center>
@@ -76,22 +89,6 @@ function CertificateIndex() {
                                     </center>
                                 </>
                             }
-                        </div>
-                        <div className="pagination" style={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'center', gap: '1px' }}>
-                            {Array(Math?.ceil(allCertificate?.length / itemsPerPage))?.fill()?.map((_, i) => (
-                                <center>
-                                    <button 
-                                        style={{ width: '35px',
-                                            borderRadius: '4px',
-                                            background: 'darkblue',
-                                            color: '#fff',
-                                            border: '1px solid darkblue', 
-                                        }}
-                                        key={i} 
-                                        onClick={() => paginate(i + 1)}
-                                    >{i + 1}</button>
-                                </center>
-                            ))}
                         </div>
                     </div>
             </div>

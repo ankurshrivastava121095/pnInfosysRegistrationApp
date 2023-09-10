@@ -4,8 +4,8 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCourses } from '../../Features/Courses/CourseSlice'
 import { Link } from 'react-router-dom'
+import { getAllInterviewQuestionCourses } from '../../Features/InterviewQuestionCourse/InterviewQuestionCourseSlice'
 
 function InterviewQuestionIndex() {
 
@@ -14,27 +14,27 @@ function InterviewQuestionIndex() {
     const[allCourses,setAllCourses] = useState([])
     const [loading, setLoading] = useState(true)
 
-    const { courses, responseStatus, responseMessage } = useSelector(
-        (state) => state.courses
+    const { interviewQuestionCourses, responseStatus, responseMessage } = useSelector(
+        (state) => state.interviewQuestionCourses
     );
 
     const fetchAllCourses = () => {
-        dispatch(getCourses());
+        dispatch(getAllInterviewQuestionCourses()); 
     }
 
     useEffect(()=>{
-        if (courses?.data && courses.data.length > 0) {
-            console.log(courses?.data);
-            setAllCourses(courses.data);
+        if (interviewQuestionCourses?.data && interviewQuestionCourses.data.length > 0) {
+            console.log(interviewQuestionCourses?.data);
+            setAllCourses(interviewQuestionCourses.data);
         }
         setLoading(false)
-    },[courses])
+    },[interviewQuestionCourses])
 
     useEffect(()=>{
         if (responseStatus === 'success') {
             setLoading(false)
         }
-    },[courses])
+    },[interviewQuestionCourses])
     
     useEffect(() => {
         fetchAllCourses();
@@ -50,7 +50,7 @@ function InterviewQuestionIndex() {
                                 !loading ?
                                 Array.isArray(allCourses) && allCourses?.map((val,key)=>(
                                     <>
-                                        <div className='d-flex flex-wrap justify-content-between'>
+                                        <div key={key} className='d-flex flex-wrap justify-content-between'>
                                             <h5>{val?.courseName}</h5>
                                             <Link to={`/interviewQuestion/${val?._id}`}>Interview Questions</Link>
                                         </div>

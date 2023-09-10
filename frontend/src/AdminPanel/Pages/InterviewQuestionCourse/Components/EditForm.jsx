@@ -1,59 +1,49 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { getQuestion, updateQuestion } from '../../../../Features/InterviewQuestions/InterviewQuestionSlice';
+import { getInterviewQuestionCourse, updateInterviewQuestionCourse } from '../../../../Features/InterviewQuestionCourse/InterviewQuestionCourseSlice';
 
-function InterviewQuestionEditForm() {
+function InterviewQuestionCourseEditForm() {
 
   const dispatch = useDispatch()
   const param = useParams()
 
-  const questionID = param.id
+  const interviewQuestionCourseID = param.id
 
-  const { questions, responseStatus, responseMessage } = useSelector(
-    (state) => state.questions
+  const { interviewQuestionCourses, responseStatus, responseMessage } = useSelector(
+    (state) => state.interviewQuestionCourses
   );
 
   const [loading, setLoading] = useState(true);
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [courseName, setCourseName] = useState('');
 
-  const handleEditorChange = (content) => {
-    setAnswer(content);
-  };
-
-  const getInterviewQuestionDetail = async() => {
-    dispatch(getQuestion(questionID))
+  const getInterviewQuestionCourseDetail = async() => {
+    dispatch(getInterviewQuestionCourse(interviewQuestionCourseID))
   }
       
   useEffect(()=>{
-      getInterviewQuestionDetail()
+      getInterviewQuestionCourseDetail()
   },[])
 
   useEffect(()=>{
     setLoading(false)
-    setQuestion(questions?.data?.question)
-    setAnswer(questions?.data?.answer)
-  },[questions])
+    setCourseName(interviewQuestionCourses?.data?.courseName)
+  },[interviewQuestionCourses])
 
   const handleSubmit = async(e) => {
     e.preventDefault()
     setLoading(true)
 
-    const interviewQuestion_Data = {
-      _id: questionID,
-      question: question,
-      answer: answer,
+    const interviewQuestionCourse_Data = {
+      _id: interviewQuestionCourseID,
+      courseName: courseName,
     };
 
-    dispatch(updateQuestion(interviewQuestion_Data));
+    dispatch(updateInterviewQuestionCourse(interviewQuestionCourse_Data));
   }
 
   const showSuccessToast = (succMessage) => {
@@ -68,10 +58,10 @@ function InterviewQuestionEditForm() {
     if (responseStatus === 'success') {
         setLoading(false)
     }
-  },[questions])
+  },[interviewQuestionCourses])
 
   useEffect(()=>{
-    if (responseStatus === 'success' && responseMessage === 'Question updated successfully') {
+    if (responseStatus === 'success' && responseMessage === 'Course updated successfully') {
         setLoading(false)
         showSuccessToast(responseMessage)
     }
@@ -80,16 +70,6 @@ function InterviewQuestionEditForm() {
         showFailToast(responseMessage)
     }
   },[responseMessage])
-
-  const modules = {
-    toolbar: [
-      [{ 'header': '1' }, { 'header': '2' }],
-      ['bold', 'italic', 'underline', 'strike'],
-      ['link', 'image'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      ['clean']
-    ],
-  };
 
   return (
     <>
@@ -104,25 +84,18 @@ function InterviewQuestionEditForm() {
                     <div className="form-floating mb-3">
                       <input 
                         type="text" 
-                        id="question" 
-                        name='question' 
+                        id="courseName" 
+                        name='courseName' 
                         className="form-control" 
-                        placeholder="Question" 
-                        value={question}
-                        onChange={(e)=>setQuestion(e.target.value)}
+                        placeholder="Course Name" 
+                        value={courseName}
+                        onChange={(e)=>setCourseName(e.target.value)}
                         required='required' 
                       />
-                      <label htmlFor="question" className='inputLabel'>Question</label>
+                      <label htmlFor="courseName" className='inputLabel'>Course Name</label>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div>
-                <label htmlFor="">Answer</label>
-                <ReactQuill
-                  value={answer}
-                  onChange={handleEditorChange}
-                />
               </div>
               <br /><br />
               {
@@ -143,4 +116,4 @@ function InterviewQuestionEditForm() {
   )
 }
 
-export default InterviewQuestionEditForm
+export default InterviewQuestionCourseEditForm

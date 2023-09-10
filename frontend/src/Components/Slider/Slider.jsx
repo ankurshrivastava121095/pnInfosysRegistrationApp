@@ -7,15 +7,17 @@ import '../../Assets/Style.css'
 const Slider = () => {
 
     const [allSliders, setAllSliders] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
         getAllSlider()
     },[])
 
     const getAllSlider = async() => {
-        const res = await axios.get('http://localhost:5000/api/pn/getAllSlider')
+        const res = await axios.get(`${process.env.REACT_APP_URL_ENDPOINT}/getAllSlider`)
         // console.log(res.data.data)
         setAllSliders(res.data.data)
+        setLoading(false)
     }
 
     return(
@@ -28,11 +30,16 @@ const Slider = () => {
                 </div>
                 <div className="carousel-inner">
                     {
-                        allSliders && allSliders.map((val,key)=>(
-                            <div className={`carousel-item ${key === 0 ? 'active' : ''}`}>
-                                <img src={val?.sliderImage?.url} className="d-block w-100 sliderHeight" alt="slider1" />
-                            </div>
-                        ))
+                        !loading ?
+                            allSliders && allSliders.map((val,key)=>(
+                                <div className={`carousel-item ${key === 0 ? 'active' : ''}`}>
+                                    <img src={val?.sliderImage?.url} className="d-block w-100 sliderHeight" alt="slider1" />
+                                </div>
+                            ))
+                        :
+                            <center>
+                                <div className="loader"></div>
+                            </center>
                     }
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">

@@ -22,6 +22,7 @@ const LoginIndex = () =>{
     const [data, setData] = useState(fields);
     const [loading, setLoading] = useState(false)
     const [handleHideShowPass, setHandleHideShowPass] = useState(true)
+    const [showError, setShowError] = useState(false)
     const [handlePassType, setHandlePassType] = useState('password')
 
     const handleInput = (e) => {
@@ -43,6 +44,10 @@ const LoginIndex = () =>{
     useEffect(()=>{
         if (success === true && message === 'Logged In') {
             navigate('/admin/dashboard');
+        }
+        else {
+            setShowError(true)
+            setLoading(false)
         }
     },[success, message])
 
@@ -102,6 +107,9 @@ const LoginIndex = () =>{
                                         </>
                                     }
                                     <br /><br />
+                                    {
+                                        showError ? <span className="text-danger fw-bold">{message}</span> : ''
+                                    }
                                     {
                                         !loading ?
                                             <button type='submit' className='btn btn-lightBlue w-100'>Login</button>

@@ -1,13 +1,12 @@
-const CourseModel = require("../models/Course");
 const InterviewQuestionModel = require("../models/InterviewQuestion");
+const InterviewQuestionCourseModel = require("../models/InterviewQuestionCourse");
 
 class InterviewQuestionController{
 
     static addQuestion = async(req,res) => {
         try{
             const { question, answer, courseID } = req.body
-            const course = await CourseModel.findOne({ _id: courseID })
-            // const data = await InterviewQuestionModel.create(req.body)
+            const course = await InterviewQuestionCourseModel.findOne({ _id: courseID })
             const data = new InterviewQuestionModel({
                 question: question,
                 answer: answer,

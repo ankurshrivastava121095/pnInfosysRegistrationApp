@@ -10,6 +10,7 @@ const UserController = require('../controllers/UserController')
 const DashboardController = require('../controllers/DashboardController')
 const CertificateController = require('../controllers/CertificateController')
 const InterviewQuestionController = require('../controllers/InterviewQuestionController')
+const InterviewQuestionCourseController = require('../controllers/InterviewQuestionCourseController')
 const router = express.Router()
 
 
@@ -86,6 +87,13 @@ router.get('/getQuestion/:id',InterviewQuestionController.getQuestion)
 router.put('/updateQuestion/:id',InterviewQuestionController.updateQuestion)
 router.delete('/questionDelete/:id',InterviewQuestionController.questionDelete)
 
+
+//InterviewQuestionCourseController
+router.post('/addInterviewQuestionCourse',InterviewQuestionCourseController.addInterviewQuestionCourse)
+router.get('/getInterviewQuestionCourses',InterviewQuestionCourseController.getInterviewQuestionCourses)
+router.get('/getInterviewQuestionCourse/:id',InterviewQuestionCourseController.getInterviewQuestionCourse)
+router.put('/updateInterviewQuestionCourse/:id',InterviewQuestionCourseController.updateInterviewQuestionCourse)
+router.delete('/interviewQuestionCourseDelete/:id',InterviewQuestionCourseController.interviewQuestionCourseDelete)
 
 // DashboardController
 router.get('/count',DashboardController.count)

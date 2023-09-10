@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from 'react';
-import { getCourses } from '../../../../Features/Courses/CourseSlice';
 import { createQuestion } from '../../../../Features/InterviewQuestions/InterviewQuestionSlice';
+import { getAllInterviewQuestionCourses } from '../../../../Features/InterviewQuestionCourse/InterviewQuestionCourseSlice';
 
 function InterviewQuestionAddForm() {
 
@@ -15,8 +18,8 @@ function InterviewQuestionAddForm() {
     (state) => state.questions
   );
 
-  const { courses } = useSelector(
-    (state) => state.courses
+  const { interviewQuestionCourses } = useSelector(
+    (state) => state.interviewQuestionCourses
   );
 
   const [loading, setLoading] = useState(true);
@@ -26,6 +29,13 @@ function InterviewQuestionAddForm() {
     answer: '',
     courseID: '',
   });
+
+  const handleEditorChange = (content) => {
+    setData({
+      ...data,
+      answer: content,
+    });
+  };
 
   const handleInput = (e) => {
     setData({
@@ -50,15 +60,15 @@ function InterviewQuestionAddForm() {
   }
 
   useEffect(()=>{
-    dispatch(getCourses())
+    dispatch(getAllInterviewQuestionCourses())
   },[])
 
   useEffect(() => {
-    if (courses?.data && courses.data.length > 0) {
-      setAllCourses(courses.data);
+    if (interviewQuestionCourses?.data && interviewQuestionCourses.data.length > 0) {
+      setAllCourses(interviewQuestionCourses.data);
       setLoading(false)
     }
-  }, [courses]);
+  }, [interviewQuestionCourses]);
 
   useEffect(()=>{
     if (responseStatus === 'success') {
@@ -76,6 +86,16 @@ function InterviewQuestionAddForm() {
         showFailToast(responseMessage)
     }
   },[responseMessage])
+
+  const modules = {
+    toolbar: [
+      [{ 'header': '1' }, { 'header': '2' }],
+      ['bold', 'italic', 'underline', 'strike'],
+      ['link', 'image'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      ['clean']
+    ],
+  };
  
   return (
     <>
@@ -98,19 +118,6 @@ function InterviewQuestionAddForm() {
                         required='required' 
                       />
                       <label htmlFor="question" className='inputLabel'>Question</label>
-                    </div>
-                  </div>
-                  <div className="col-md-12">
-                    <div className="form-floating mb-3">
-                      <textarea  
-                        id="answer" 
-                        name='answer' 
-                        className="form-control" 
-                        placeholder="Answer"  
-                        onChange={handleInput}
-                        required='required' 
-                      ></textarea>
-                      <label htmlFor="answer" className='inputLabel'>Answer</label>
                     </div>
                   </div>
                   <div className="col-md-12">
@@ -138,6 +145,19 @@ function InterviewQuestionAddForm() {
                       <label htmlFor="courseID" className='inputLabel'>Course</label>
                     </div>
                   </div>
+                  {/*  */}
+                  <div>
+                    <label htmlFor="">Answer</label>
+                    <ReactQuill
+                      value={data?.answer}
+                      onChange={handleEditorChange}
+                    />
+                    {/* <div>
+                      <h3>Editor Content:</h3>
+                      <div dangerouslySetInnerHTML={{ __html: editorHtml }} />
+                    </div> */}
+                  </div>
+                  {/*  */}
                 </div>
               </div>
               <br /><br />

@@ -10,8 +10,6 @@ function InterviewQuestionsIndex() {
     const param = useParams()
     const courseID = param.id
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(8);
     const [allQuestions,setAllQuestions] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -25,14 +23,6 @@ function InterviewQuestionsIndex() {
         getCourseDetail()
     }, []);
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = allQuestions?.slice(indexOfFirstItem, indexOfLastItem);
-
-    const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    }
-
     return (
         <>
             <div className="container-fuild">
@@ -42,7 +32,7 @@ function InterviewQuestionsIndex() {
                             <div className="accordion accordion-flush" id="accordionFlushExample">
                                 {
                                     !loading ?
-                                    currentItems?.map((val,key)=>(
+                                    Array.isArray(allQuestions) && allQuestions?.map((val,key)=>(
                                         <div className="accordion-item">
                                             <h2 className="accordion-header">
                                                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#flush-collapse${key}`} aria-expanded="false" aria-controls={`flush-collapse${key}`}>
@@ -50,7 +40,10 @@ function InterviewQuestionsIndex() {
                                                 </button>
                                             </h2>
                                             <div id={`flush-collapse${key}`} className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                                <div className="accordion-body">{val?.answer}</div>
+                                                <div className="accordion-body">
+                                                    <span className='fw-bold'>Answer:</span>
+                                                    &nbsp;&nbsp;&nbsp;<div dangerouslySetInnerHTML={{ __html: val?.answer }} />
+                                                </div>
                                             </div>
                                         </div>
                                     ))
@@ -62,22 +55,6 @@ function InterviewQuestionsIndex() {
                                     </>
                                 }
                             </div>
-                        </div>
-                        <div className="pagination" style={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
-                            {Array(Math?.ceil(allQuestions?.length / itemsPerPage))?.fill()?.map((_, i) => (
-                                <center>
-                                    <button 
-                                        style={{ width: '35px',
-                                            borderRadius: '4px',
-                                            background: 'darkblue',
-                                            color: '#fff',
-                                            border: '1px solid darkblue', 
-                                        }}
-                                        key={i} 
-                                        onClick={() => paginate(i + 1)}
-                                    >{i + 1}</button>
-                                </center>
-                            ))}
                         </div>
                     </div>
             </div>

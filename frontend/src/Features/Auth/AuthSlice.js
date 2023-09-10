@@ -98,7 +98,7 @@ const authSlice = createSlice({
             state.loading = false
             state.error = payload
             state.success = false
-            state.message = payload.message
+            state.message = payload
         },
 
         // logout user
