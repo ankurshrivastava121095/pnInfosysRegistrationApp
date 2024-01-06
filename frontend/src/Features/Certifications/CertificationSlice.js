@@ -78,7 +78,9 @@ export const deleteCertificate = createAsyncThunk(
 const certificatesSlice = createSlice({
   name: "certificates",
   initialState,
-  reducers: {},
+  reducers: {
+    resetCertificateState: (state) => initialState,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createCertificate.pending, (state) => {
@@ -146,4 +148,5 @@ const certificatesSlice = createSlice({
   },
 });
 
+export const { resetCertificateState } = certificatesSlice.actions;
 export default certificatesSlice.reducer;
