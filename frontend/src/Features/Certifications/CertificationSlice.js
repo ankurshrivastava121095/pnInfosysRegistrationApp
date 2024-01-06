@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_URL_ENDPOINT
+const baseURL = process.env.REACT_APP_URL_ENDPOINT;
 
 const initialState = {
   certificates: [],
@@ -37,7 +36,7 @@ export const getCertificate = createAsyncThunk(
         const response = await axios.get(`${baseURL}/certificateDetail/${certificateId}`);
         return response.data;
     } catch (error) {
-        return error.response.data.message;
+        return rejectWithValue(error.response.data.message);
     }
 });
 
@@ -80,133 +79,70 @@ const certificatesSlice = createSlice({
   name: "certificates",
   initialState,
   reducers: {},
-  extraReducers: {
-    // store starts
-    [createCertificate.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [createCertificate.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Certificate created successfully",
-      };
-    },
-    [createCertificate.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // store ends
-
-    // fetching all starts
-    [getCertificates.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getCertificates.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        certificates: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getCertificates.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching all ends
-
-    // fetching single starts
-    [getCertificate.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getCertificate.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        certificates: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getCertificate.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching single ends
-
-    // deleting starts
-    [deleteCertificate.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [deleteCertificate.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Certificate deleted successfully",
-      };
-    },
-    [deleteCertificate.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // deleting ends
-
-    // updating starts
-    [updateCertificate.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [updateCertificate.fulfilled]: (state, action) => {
-      if (Array.isArray(state.certificates)) {
-        return {
-          ...state,
-          certificates: state.certificates.map((certificate) =>
+  extraReducers: (builder) => {
+    builder
+      .addCase(createCertificate.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(createCertificate.fulfilled, (state) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Certificate created successfully";
+      })
+      .addCase(createCertificate.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getCertificates.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getCertificates.fulfilled, (state, action) => {
+        state.certificates = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getCertificates.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getCertificate.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getCertificate.fulfilled, (state, action) => {
+        state.certificates = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getCertificate.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(deleteCertificate.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(deleteCertificate.fulfilled, (state) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Certificate deleted successfully";
+      })
+      .addCase(deleteCertificate.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(updateCertificate.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(updateCertificate.fulfilled, (state, action) => {
+        if (Array.isArray(state.certificates)) {
+          state.certificates = state.certificates.map((certificate) =>
             certificate.id === action.payload._id ? action.payload : certificate
-          ),
-          responseStatus: "success",
-          responseMessage: "Certificate updated successfully",
-        };
-      } else {
-        return {
-          ...state,
-          certificates: action.payload,
-          responseStatus: "success",
-          responseMessage: "Certificate updated successfully",
-        };
-      }
-    },
-    [updateCertificate.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // updating ends
+          );
+        } else {
+          state.certificates = action.payload;
+        }
+        state.responseStatus = "success";
+        state.responseMessage = "Certificate updated successfully";
+      })
+      .addCase(updateCertificate.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      });
   },
 });
 

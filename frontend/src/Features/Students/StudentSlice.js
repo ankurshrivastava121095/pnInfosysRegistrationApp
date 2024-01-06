@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_URL_ENDPOINT
+const baseURL = process.env.REACT_APP_URL_ENDPOINT;
 
 const initialState = {
   students: [],
@@ -37,7 +36,7 @@ export const getStudent = createAsyncThunk(
         const response = await axios.get(`${baseURL}/getStudent/${studentId}`);
         return response.data;
     } catch (error) {
-        return error.response.data.message;
+        return rejectWithValue(error.response.data.message);
     }
 });
 
@@ -79,135 +78,75 @@ export const deleteStudent = createAsyncThunk(
 const studentsSlice = createSlice({
   name: "students",
   initialState,
-  reducers: {},
-  extraReducers: {
-    // store starts
-    [createStudent.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [createStudent.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Student created successfully",
-      };
-    },
-    [createStudent.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // store ends
-
-    // fetching all starts
-    [getStudents.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getStudents.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        students: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getStudents.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching all ends
-
-    // fetching single starts
-    [getStudent.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getStudent.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        students: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getStudent.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching single ends
-
-    // deleting starts
-    [deleteStudent.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [deleteStudent.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Student deleted successfully",
-      };
-    },
-    [deleteStudent.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // deleting ends
-
-    // updating starts
-    [updateStudent.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [updateStudent.fulfilled]: (state, action) => {
-      if (Array.isArray(state.students)) {
-        return {
-          ...state,
-          students: state.students.map((student) =>
+  reducers: {
+    resetStudentState: (state) => initialState,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createStudent.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(createStudent.fulfilled, (state, action) => {
+        state.responseStatus = "success";
+        state.responseMessage = "You have Registered Successfully, We will get in touch with you soon!";
+      })
+      .addCase(createStudent.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getStudents.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getStudents.fulfilled, (state, action) => {
+        state.students = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getStudents.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getStudent.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getStudent.fulfilled, (state, action) => {
+        state.students = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getStudent.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(deleteStudent.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(deleteStudent.fulfilled, (state, action) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Student deleted successfully";
+      })
+      .addCase(deleteStudent.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(updateStudent.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(updateStudent.fulfilled, (state, action) => {
+        if (Array.isArray(state.students)) {
+          state.students = state.students.map((student) =>
             student.id === action.payload._id ? action.payload : student
-          ),
-          responseStatus: "success",
-          responseMessage: "Student updated successfully",
-        };
-      } else {
-        return {
-          ...state,
-          students: action.payload,
-          responseStatus: "success",
-          responseMessage: "Student updated successfully",
-        };
-      }
-    },
-    [updateStudent.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // updating ends
+          );
+        } else {
+          state.students = action.payload;
+        }
+        state.responseStatus = "success";
+        state.responseMessage = "Student updated successfully";
+      })
+      .addCase(updateStudent.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      });
   },
 });
 
+export const { resetStudentState } = studentsSlice.actions;
 export default studentsSlice.reducer;

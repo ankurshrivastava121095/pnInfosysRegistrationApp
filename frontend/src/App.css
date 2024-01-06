@@ -426,3 +426,16 @@ thead, tfoot{
   100% { transform: rotate(360deg); }
 }
 /* loader ends */
+
+.modal-header {
+  border-bottom: none !important;
+  padding-bottom: 0px !important;
+}
+
+.modal-footer {
+  border-top: none !important;
+}
+
+.modal-content {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+}

@@ -77,7 +77,9 @@ export const deleteBanner = createAsyncThunk(
 const bannersSlice = createSlice({
   name: "banners",
   initialState,
-  reducers: {},
+  reducers: {
+    resetBannerState: (state) => initialState,
+  },
   extraReducers: {
     // store starts
     [createBanner.pending]: (state, action) => {
@@ -208,4 +210,5 @@ const bannersSlice = createSlice({
   },
 });
 
+export const { resetBannerState } = bannersSlice.actions;
 export default bannersSlice.reducer;

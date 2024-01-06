@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_URL_ENDPOINT
+const baseURL = process.env.REACT_APP_URL_ENDPOINT;
 
 const initialState = {
   courses: [],
@@ -32,14 +31,15 @@ export const getCourses = createAsyncThunk("courses/getCourses", async () => {
 });
 
 export const getCourse = createAsyncThunk(
-    "courses/getCourse", async (courseId, { rejectWithValue }) => {
+  "courses/getCourse", async (courseId, { rejectWithValue }) => {
     try {
-        const response = await axios.get(`${baseURL}/courseDetail/${courseId}`);
-        return response.data;
+      const response = await axios.get(`${baseURL}/courseDetail/${courseId}`);
+      return response.data;
     } catch (error) {
-        return error.response.data.message;
+      return rejectWithValue(error.response.data.message);
     }
-});
+  }
+);
 
 export const updateCourse = createAsyncThunk(
   "courses/updateCourse",
@@ -94,135 +94,75 @@ export const deleteCourse = createAsyncThunk(
 const coursesSlice = createSlice({
   name: "courses",
   initialState,
-  reducers: {},
-  extraReducers: {
-    // store starts
-    [createCourse.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [createCourse.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Course created successfully",
-      };
-    },
-    [createCourse.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // store ends
-
-    // fetching all starts
-    [getCourses.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getCourses.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        courses: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getCourses.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching all ends
-
-    // fetching single starts
-    [getCourse.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getCourse.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        courses: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getCourse.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching single ends
-
-    // deleting starts
-    [deleteCourse.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [deleteCourse.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Course deleted successfully",
-      };
-    },
-    [deleteCourse.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // deleting ends
-
-    // updating starts
-    [updateCourse.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [updateCourse.fulfilled]: (state, action) => {
-      if (Array.isArray(state.courses)) {
-        return {
-          ...state,
-          courses: state.courses.map((course) =>
+  reducers: {
+    resetCourseState: (state) => initialState,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createCourse.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(createCourse.fulfilled, (state) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Course created successfully";
+      })
+      .addCase(createCourse.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getCourses.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getCourses.fulfilled, (state, action) => {
+        state.courses = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getCourses.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getCourse.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getCourse.fulfilled, (state, action) => {
+        state.courses = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getCourse.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(deleteCourse.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(deleteCourse.fulfilled, (state) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Course deleted successfully";
+      })
+      .addCase(deleteCourse.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(updateCourse.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(updateCourse.fulfilled, (state, action) => {
+        if (Array.isArray(state.courses)) {
+          state.courses = state.courses.map((course) =>
             course.id === action.payload._id ? action.payload : course
-          ),
-          responseStatus: "success",
-          responseMessage: "Course updated successfully",
-        };
-      } else {
-        return {
-          ...state,
-          courses: action.payload,
-          responseStatus: "success",
-          responseMessage: "Course updated successfully",
-        };
-      }
-    },
-    [updateCourse.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // updating ends
+          );
+        } else {
+          state.courses = action.payload;
+        }
+        state.responseStatus = "success";
+        state.responseMessage = "Course updated successfully";
+      })
+      .addCase(updateCourse.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      });
   },
 });
 
+export const { resetCourseState } = coursesSlice.actions;
 export default coursesSlice.reducer;

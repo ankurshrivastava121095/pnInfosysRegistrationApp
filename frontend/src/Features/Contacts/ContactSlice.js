@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_URL_ENDPOINT
+const baseURL = process.env.REACT_APP_URL_ENDPOINT;
 
 const initialState = {
   contacts: [],
@@ -32,89 +31,59 @@ export const getContacts = createAsyncThunk("contacts/getContacts", async () => 
 });
 
 export const getContact = createAsyncThunk(
-    "contacts/getContact", async (contactId, { rejectWithValue }) => {
+  "contacts/getContact", async (contactId, { rejectWithValue }) => {
     try {
-        const response = await axios.get(`${baseURL}/messageDetail/${contactId}`);
-        return response.data;
+      const response = await axios.get(`${baseURL}/messageDetail/${contactId}`);
+      return response.data;
     } catch (error) {
-        return error.response.data.message;
+      return rejectWithValue(error.response.data.message);
     }
-});
+  }
+);
 
 const contactsSlice = createSlice({
   name: "contacts",
   initialState,
-  reducers: {},
-  extraReducers: {
-    // store starts
-    [createContact.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [createContact.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Contact created successfully",
-      };
-    },
-    [createContact.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // store ends
-
-    // fetching all starts
-    [getContacts.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getContacts.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        contacts: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getContacts.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching all ends
-
-    // fetching single starts
-    [getContact.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getContact.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        contacts: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getContact.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching single ends
+  reducers: {
+    resetContactState: (state) => initialState,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createContact.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(createContact.fulfilled, (state) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Contact created successfully";
+      })
+      .addCase(createContact.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getContacts.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getContacts.fulfilled, (state, action) => {
+        state.contacts = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getContacts.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getContact.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getContact.fulfilled, (state, action) => {
+        state.contacts = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getContact.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      });
   },
 });
 
+export const { resetContactState } = contactsSlice.actions;
 export default contactsSlice.reducer;

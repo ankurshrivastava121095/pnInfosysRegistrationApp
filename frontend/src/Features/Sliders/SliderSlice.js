@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_URL_ENDPOINT
+const baseURL = process.env.REACT_APP_URL_ENDPOINT;
 
 const initialState = {
   sliders: [],
@@ -37,7 +36,7 @@ export const getSlider = createAsyncThunk(
         const response = await axios.get(`${baseURL}/sliderDetail/${sliderId}`);
         return response.data;
     } catch (error) {
-        return error.response.data.message;
+        return rejectWithValue(error.response.data.message);
     }
 });
 
@@ -75,137 +74,77 @@ export const deleteSlider = createAsyncThunk(
 );
 
 const slidersSlice = createSlice({
-  name: "banners",
+  name: "sliders",
   initialState,
-  reducers: {},
-  extraReducers: {
-    // store starts
-    [createSlider.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [createSlider.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Slider created successfully",
-      };
-    },
-    [createSlider.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // store ends
-
-    // fetching all starts
-    [getSliders.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getSliders.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        sliders: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getSliders.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching all ends
-
-    // fetching single starts
-    [getSlider.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getSlider.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        sliders: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getSlider.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching single ends
-
-    // deleting starts
-    [deleteSlider.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [deleteSlider.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Slider deleted successfully",
-      };
-    },
-    [deleteSlider.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // deleting ends
-
-    // updating starts
-    [updateSlider.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [updateSlider.fulfilled]: (state, action) => {
-      if (Array.isArray(state.sliders)) {
-        return {
-          ...state,
-          sliders: state.sliders.map((slider) =>
+  reducers: {
+    resetSliderState: (state) => initialState,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createSlider.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(createSlider.fulfilled, (state, action) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Slider created successfully";
+      })
+      .addCase(createSlider.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getSliders.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getSliders.fulfilled, (state, action) => {
+        state.sliders = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getSliders.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getSlider.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getSlider.fulfilled, (state, action) => {
+        state.sliders = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getSlider.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(deleteSlider.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(deleteSlider.fulfilled, (state, action) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Slider deleted successfully";
+      })
+      .addCase(deleteSlider.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(updateSlider.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(updateSlider.fulfilled, (state, action) => {
+        if (Array.isArray(state.sliders)) {
+          state.sliders = state.sliders.map((slider) =>
             slider.id === action.payload._id ? action.payload : slider
-          ),
-          responseStatus: "success",
-          responseMessage: "Slider updated successfully",
-        };
-      } else {
-        return {
-          ...state,
-          sliders: action.payload,
-          responseStatus: "success",
-          responseMessage: "Slider updated successfully",
-        };
-      }
-    },
-    [updateSlider.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // updating ends
+          );
+        } else {
+          state.sliders = action.payload;
+        }
+        state.responseStatus = "success";
+        state.responseMessage = "Slider updated successfully";
+      })
+      .addCase(updateSlider.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      });
   },
 });
 
+export const { resetSliderState } = slidersSlice.actions;
 export default slidersSlice.reducer;

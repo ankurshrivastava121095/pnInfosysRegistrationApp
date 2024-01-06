@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -40,7 +39,7 @@ export const getQuestions = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      return error.response.data.message;
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -51,7 +50,7 @@ export const getQuestion = createAsyncThunk(
       const response = await axios.get(`${baseURL}/getQuestion/${questionId}`);
       return response.data;
   } catch (error) {
-      return error.response.data.message;
+      return rejectWithValue(error.response.data.message);
   }
 });
 
@@ -85,158 +84,86 @@ export const deleteQuestion = createAsyncThunk(
 const questionsSlice = createSlice({
   name: "questions",
   initialState,
-  reducers: {},
-  extraReducers: {
-    // store starts
-    [createQuestion.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [createQuestion.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Question created successfully",
-      };
-    },
-    [createQuestion.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // store ends
-
-    // fetching all starts
-    [getAllQuestions.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getAllQuestions.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        questions: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getAllQuestions.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching all ends
-
-    // fetching all by course id starts
-    [getQuestions.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getQuestions.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        questions: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getQuestions.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching all by course id ends
-
-    // fetching single starts
-    [getQuestion.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getQuestion.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        questions: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getQuestion.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching single ends
-
-    // deleting starts
-    [deleteQuestion.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [deleteQuestion.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Question deleted successfully",
-      };
-    },
-    [deleteQuestion.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // deleting ends
-
-    // updating starts
-    [updateQuestion.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [updateQuestion.fulfilled]: (state, action) => {
-      if (Array.isArray(state.questions)) {
-        return {
-          ...state,
-          questions: state.questions.map((question) =>
+  reducers: {
+    resetQuestionState: (state) => initialState,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createQuestion.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(createQuestion.fulfilled, (state, action) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Question created successfully";
+      })
+      .addCase(createQuestion.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getAllQuestions.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getAllQuestions.fulfilled, (state, action) => {
+        state.questions = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getAllQuestions.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getQuestions.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getQuestions.fulfilled, (state, action) => {
+        state.questions = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getQuestions.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getQuestion.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getQuestion.fulfilled, (state, action) => {
+        state.questions = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getQuestion.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(deleteQuestion.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(deleteQuestion.fulfilled, (state, action) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Question deleted successfully";
+      })
+      .addCase(deleteQuestion.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(updateQuestion.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(updateQuestion.fulfilled, (state, action) => {
+        if (Array.isArray(state.questions)) {
+          state.questions = state.questions.map((question) =>
             question.id === action.payload._id ? action.payload : question
-          ),
-          responseStatus: "success",
-          responseMessage: "Question updated successfully",
-        };
-      } else {
-        return {
-          ...state,
-          questions: action.payload,
-          responseStatus: "success",
-          responseMessage: "Question updated successfully",
-        };
-      }
-    },
-    [updateQuestion.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // updating ends
+          );
+        } else {
+          state.questions = action.payload;
+        }
+        state.responseStatus = "success";
+        state.responseMessage = "Question updated successfully";
+      })
+      .addCase(updateQuestion.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      });
   },
 });
 
+export const { resetQuestionState } = questionsSlice.actions;
 export default questionsSlice.reducer;

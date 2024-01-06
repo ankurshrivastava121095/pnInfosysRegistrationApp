@@ -5,12 +5,13 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { createStudent } from '../../Features/Students/StudentSlice'
+import { useNavigate, useParams } from 'react-router-dom'
+import { createStudent, resetStudentState } from '../../Features/Students/StudentSlice'
 
 function RegistrationForm() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { students, responseStatus, responseMessage } = useSelector(
         (state) => state.students
@@ -40,6 +41,7 @@ function RegistrationForm() {
     const [showResponse, setShowResponse] = useState(false)
     const [responseText, setResponseText] = useState('')
     const [responseTextColor, setResponseTextColor] = useState('')
+    const [showMessageModal, setshowMessageModal] = useState(false)
 
     const handleInput = (event) => {
         setFormData({
@@ -57,20 +59,48 @@ function RegistrationForm() {
         dispatch(createStudent(formData));
     }
 
+    const closeModal = () => {
+        setFormData({
+            studentName : '',
+            email : '',
+            mobileNumber : '',
+            address : '',
+            gender : '',
+            college : '',
+            branch : '',
+            qualification : '',
+            semester : '',
+            courseId : '',
+        });
+        dispatch(resetStudentState());
+        setshowMessageModal(false);
+        navigate('/courses')
+    };
+
+    // useEffect(()=>{
+    //     if (responseMessage === 'Student created successfully') {
+    //         setLoading(false)
+    //         setShowResponse(true)   
+    //         setResponseText('You have Registered Successfully We will get in touch with you soon !')
+    //         setResponseTextColor('success')  
+    //     } 
+    //     if (responseStatus === 'rejected') {
+    //         setLoading(false)
+    //         setShowResponse(true)   
+    //         setResponseText('Something went wrong, Try again !')
+    //         setResponseTextColor('danger')  
+    //     }
+    // },[students, responseMessage])
     useEffect(()=>{
-        if (responseMessage === 'Student created successfully') {
+        if (responseStatus === 'success' && responseMessage === 'You have Registered Successfully, We will get in touch with you soon!') {
             setLoading(false)
-            setShowResponse(true)   
-            setResponseText('You have Registered Successfully We will get in touch with you soon !')
-            setResponseTextColor('success')  
-        } 
-        if (responseStatus === 'rejected') {
-            setLoading(false)
-            setShowResponse(true)   
-            setResponseText('Something went wrong, Try again !')
-            setResponseTextColor('danger')  
+            setshowMessageModal(true)
         }
-    },[students, responseMessage])
+        if (responseStatus == 'rejected') {
+            setLoading(false)
+            setshowMessageModal(true)
+        }
+    },[students,responseStatus,responseMessage])
 
     // 
 
@@ -80,15 +110,15 @@ function RegistrationForm() {
         setCourseData(data.data)
     }
 
-    const getActiveBanner = async() => {
-        const {data} = await axios.get(`${process.env.REACT_APP_URL_ENDPOINT}/getActiveBanner`);
-        console.log(data.data.bannerImage.url)
-        setBanner(data.data.bannerImage.url)
-    }
+    // const getActiveBanner = async() => {
+    //     const {data} = await axios.get(`${process.env.REACT_APP_URL_ENDPOINT}/getActiveBanner`);
+    //     console.log(data)
+    //     setBanner(data.data.courseImage.url)
+    // }
         
     useEffect(()=>{
         getCourseDetail()
-        getActiveBanner()
+        // getActiveBanner()
     },[])
 
     
@@ -304,6 +334,36 @@ function RegistrationForm() {
                                         </center>
                                 }
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Success Modal */}
+            <div
+                className={`modal fade${showMessageModal ? ' show' : ''}`}
+                tabIndex="-1"
+                role="dialog"
+                style={{ display: showMessageModal ? 'block' : 'none' }}
+            >
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div className="modal-content">
+                        <div className="modal-header justify-content-center">
+                            <h1 className="modal-title text-success" id="successModalLabel">
+                            <i class="fa-solid fa-thumbs-up"></i>
+                            </h1>
+                        </div>
+                        <div className="modal-body">
+                            <div className='fs-3 text-center'>{responseMessage}</div>
+                        </div>
+                        <div className="modal-footer justify-content-center">
+                            <button
+                                type="button"
+                                className="btn btn-success btn-sm"
+                                onClick={closeModal}
+                            >
+                                Close
+                            </button>
                         </div>
                     </div>
                 </div>

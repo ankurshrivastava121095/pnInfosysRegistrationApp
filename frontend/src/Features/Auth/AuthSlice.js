@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -17,56 +16,52 @@ const initialState = {
 export const registerUser = createAsyncThunk(
     'auth/register',
     async (user, { rejectWithValue }) => {
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            await axios.post(
+                `${baseURL}/register`,
+                user,
+                config
+            );
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
         }
-        await axios.post(
-          `${baseURL}/register`,
-          user,
-          config
-        )
-      } catch (error) {
-      // return custom error message from backend if present
-        if (error.response && error.response.data.message) {
-          return rejectWithValue(error.response.data.message)
-        } else {
-          return rejectWithValue(error.message)
-        }
-      }
     }
-)
+);
 
 export const userLogin = createAsyncThunk(
     'auth/login',
     async (user, { rejectWithValue }) => {
         try {
-            // configure header's Content-Type as JSON
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            }
+            };
             const { data } = await axios.post(
                 `${baseURL}/loginUser`,
                 user,
                 config
-            )
-            // store user's token in local storage
-            localStorage.setItem('userToken', data.token)
-            return data
+            );
+            localStorage.setItem('userToken', data.token);
+            return data;
         } catch (error) {
-            // return custom error message from API if any
             if (error.response && error.response.data.message) {
-                return rejectWithValue(error.response.data.message)
+                return rejectWithValue(error.response.data.message);
             } else {
-                return rejectWithValue(error.message)
+                return rejectWithValue(error.message);
             }
         }
     }
-)
+);
 
 export const userLogout = createAsyncThunk("auth/logout", async () => {
     try {
@@ -75,68 +70,66 @@ export const userLogout = createAsyncThunk("auth/logout", async () => {
     } catch (error) {
         return error.response.data.message;
     }
-  });
+});
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
-    extraReducers: {
-        // login user
-        [userLogin.pending]: (state) => {
-            state.loading = true
-            state.error = null
-        },
-        [userLogin.fulfilled]: (state, { payload }) => {
-            state.loading = false
-            state.userInfo = payload
-            state.success = true
-            state.message = 'Logged In'
-            localStorage.setItem('userData', JSON.stringify(payload.user));
-        },
-        [userLogin.rejected]: (state, { payload }) => {
-            state.loading = false
-            state.error = payload
-            state.success = false
-            state.message = payload
-        },
-
-        // logout user
-        [userLogout.pending]: (state) => {
-            state.loading = true
-            state.error = null
-        },
-        [userLogout.fulfilled]: (state, { payload }) => {
-            localStorage.removeItem('userToken') // deletes token from storage
-            localStorage.removeItem('userData') // deletes token from storage
-            state.loading = false
-            state.userInfo = null
-            state.success = true
-            state.message = 'Logged Out'
-            state.error = null
-        },
-        [userLogout.rejected]: (state, { payload }) => {
-            state.loading = false
-            state.error = payload
-        },
-
-        // register user reducer
-        [registerUser.pending]: (state) => {
-            state.loading = true
-            state.error = null
-        },
-        [registerUser.fulfilled]: (state, { payload }) => {
-            state.loading = false
-            state.success = true
-            state.message = 'Registered Successfully !'
-        },
-        [registerUser.rejected]: (state, { payload }) => {
-            state.loading = false
-            state.error = payload
-            state.message = 'Error, Registration Failed'
-        },
+    reducers: {
+        resetAuthState: (state) => initialState,
     },
-})
+    extraReducers: (builder) => {
+        builder
+            .addCase(userLogin.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(userLogin.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.userInfo = payload;
+                state.success = true;
+                state.message = 'Logged In';
+                localStorage.setItem('userData', JSON.stringify(payload.user));
+            })
+            .addCase(userLogin.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+                state.success = false;
+                state.message = payload;
+            })
+            .addCase(userLogout.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(userLogout.fulfilled, (state) => {
+                localStorage.removeItem('userToken');
+                localStorage.removeItem('userData');
+                state.loading = false;
+                state.userInfo = null;
+                state.success = true;
+                state.message = 'Logged Out';
+                state.error = null;
+            })
+            .addCase(userLogout.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            })
+            .addCase(registerUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(registerUser.fulfilled, (state) => {
+                state.loading = false;
+                state.success = true;
+                state.message = 'Registered Successfully !';
+            })
+            .addCase(registerUser.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+                state.message = 'Error, Registration Failed';
+            });
+    },
+});
 
-// export const { logout } = authSlice.actions
-export default authSlice.reducer
+export const { resetAuthState } = authSlice.actions;
+export default authSlice.reducer;

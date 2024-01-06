@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -37,7 +36,7 @@ export const getInterviewQuestionCourse = createAsyncThunk(
       const response = await axios.get(`${baseURL}/getInterviewQuestionCourse/${interviewQuestionCourseId}`);
       return response.data;
   } catch (error) {
-      return error.response.data.message;
+      return rejectWithValue(error.response.data.message);
   }
 });
 
@@ -71,135 +70,75 @@ export const deleteInterviewQuestionCourse = createAsyncThunk(
 const interviewQuestionCoursesSlice = createSlice({
   name: "interviewQuestionCourses",
   initialState,
-  reducers: {},
-  extraReducers: {
-    // store starts
-    [createInterviewQuestionCourse.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [createInterviewQuestionCourse.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Course created successfully",
-      };
-    },
-    [createInterviewQuestionCourse.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // store ends
-
-    // fetching all starts
-    [getAllInterviewQuestionCourses.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getAllInterviewQuestionCourses.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        interviewQuestionCourses: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getAllInterviewQuestionCourses.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching all ends
-
-    // fetching single starts
-    [getInterviewQuestionCourse.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [getInterviewQuestionCourse.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        interviewQuestionCourses: action.payload,
-        responseStatus: "success",
-      };
-    },
-    [getInterviewQuestionCourse.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // fetching single ends
-
-    // deleting starts
-    [deleteInterviewQuestionCourse.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [deleteInterviewQuestionCourse.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "success",
-        responseMessage: "Course deleted successfully",
-      };
-    },
-    [deleteInterviewQuestionCourse.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // deleting ends
-
-    // updating starts
-    [updateInterviewQuestionCourse.pending]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "pending",
-      };
-    },
-    [updateInterviewQuestionCourse.fulfilled]: (state, action) => {
-      if (Array.isArray(state.interviewQuestionCourses)) {
-        return {
-          ...state,
-          interviewQuestionCourses: state.interviewQuestionCourses.map((interviewQuestionCourse) =>
+  reducers: {
+    resetInterviewQuestionCourseState: (state) => initialState,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createInterviewQuestionCourse.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(createInterviewQuestionCourse.fulfilled, (state, action) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Course created successfully";
+      })
+      .addCase(createInterviewQuestionCourse.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getAllInterviewQuestionCourses.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getAllInterviewQuestionCourses.fulfilled, (state, action) => {
+        state.interviewQuestionCourses = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getAllInterviewQuestionCourses.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(getInterviewQuestionCourse.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(getInterviewQuestionCourse.fulfilled, (state, action) => {
+        state.interviewQuestionCourses = action.payload;
+        state.responseStatus = "success";
+      })
+      .addCase(getInterviewQuestionCourse.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(deleteInterviewQuestionCourse.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(deleteInterviewQuestionCourse.fulfilled, (state, action) => {
+        state.responseStatus = "success";
+        state.responseMessage = "Course deleted successfully";
+      })
+      .addCase(deleteInterviewQuestionCourse.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      })
+      .addCase(updateInterviewQuestionCourse.pending, (state) => {
+        state.responseStatus = "pending";
+      })
+      .addCase(updateInterviewQuestionCourse.fulfilled, (state, action) => {
+        if (Array.isArray(state.interviewQuestionCourses)) {
+          state.interviewQuestionCourses = state.interviewQuestionCourses.map((interviewQuestionCourse) =>
             interviewQuestionCourse.id === action.payload._id ? action.payload : interviewQuestionCourse
-          ),
-          responseStatus: "success",
-          responseMessage: "Course updated successfully",
-        };
-      } else {
-        return {
-          ...state,
-          interviewQuestionCourses: action.payload,
-          responseStatus: "success",
-          responseMessage: "Course updated successfully",
-        };
-      }
-    },
-    [updateInterviewQuestionCourse.rejected]: (state, action) => {
-      return {
-        ...state,
-        responseStatus: "rejected",
-        responseMessage: action.payload,
-      };
-    },
-    // updating ends
+          );
+        } else {
+          state.interviewQuestionCourses = action.payload;
+        }
+        state.responseStatus = "success";
+        state.responseMessage = "Course updated successfully";
+      })
+      .addCase(updateInterviewQuestionCourse.rejected, (state, action) => {
+        state.responseStatus = "rejected";
+        state.responseMessage = action.payload;
+      });
   },
 });
 
+export const { resetInterviewQuestionCourseState } = interviewQuestionCoursesSlice.actions;
 export default interviewQuestionCoursesSlice.reducer;
